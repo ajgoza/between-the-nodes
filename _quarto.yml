@@ -1,0 +1,37 @@
+project:
+  type: book
+  output-dir: _book
+  execute-dir: project          # code cells run from book/, so `lib/` is importable
+
+book:
+  title: "Between the Nodes"
+  subtitle: "A finite element story for AE 370"
+  author: "Andres Goza"
+  chapters:
+    - index.qmd
+    - chapters/00-cold-open.qmd
+    - chapters/01-maras-code.qmd
+    - chapters/02-better-than-good.qmd
+    - chapters/03-the-messy-ones.qmd
+    - chapters/04-show-them.qmd
+  page-navigation: true
+  search: true
+
+execute:
+  echo: false                   # code is hidden unless a scene shows it as an object
+  warning: false
+  freeze: false                 # everything recomputes on render: numbers can't drift
+
+format:
+  html:
+    theme:
+      light: [cosmo, styles/book.scss]
+      dark: [darkly, styles/book.scss, styles/book-dark.scss]
+    toc: true
+    toc-depth: 2
+    number-sections: false
+    code-copy: true
+    fig-align: center
+    fig-cap-location: bottom
+    reference-location: margin
+    smooth-scroll: true

@@ -1,0 +1,14 @@
+_book/
+.quarto/
+__pycache__/
+*.quarto_ipynb
+*_files/
+_environment.local
+*.egg-info/
+build/
+.DS_Store
+.ipynb_checkpoints/
+
+/.quarto/
+**/*.quarto_ipynb
+/_*.local

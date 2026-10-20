@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "falkenrath"
+version = "1.0"
+description = "The Falkenrath-Voss thermal codes from Between the Nodes (AE 370)"
+requires-python = ">=3.9"
+dependencies = ["numpy", "scipy", "matplotlib"]
+
+[tool.setuptools]
+package-dir = {"" = "lib"}
+py-modules = ["falkenrath", "model"]   # figs.py styles the book only

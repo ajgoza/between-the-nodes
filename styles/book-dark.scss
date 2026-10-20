@@ -1,0 +1,23 @@
+/*-- scss:defaults --*/
+$illini-blue: #c9d6ee;
+/*-- scss:rules --*/
+.email { background: #1f2226; color: #e8e8e8; }
+.homework { background: #f6f3e8; }   // paper stays paper
+.printout, .notebook .cell-output { color: #d6e2f5 !important; }
+blockquote blockquote { background: #4a4310; color: #fff4c2; }
+// Program output: the theme's own code colour wins over the rule above unless
+// the inner <pre>/<code> are named too.
+.notebook .cell-output pre, .notebook .cell-output code,
+.printout pre, .printout code, .printout .cell-output pre {
+  color: #d6e2f5 !important; background: transparent !important;
+}
+// Mind's-eye figures are drawn for a light page: flip them for a dark one,
+// keeping the hues (blue stays blue, orange stays orange).
+.mindseye {
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.07) 0%,
+                              rgba(255, 255, 255, 0.03) 55%, transparent 75%);
+  img { filter: invert(1) hue-rotate(180deg) brightness(1.15); }
+}
+
+.notepad { color: #1f2a5a; }   // paper stays paper
+.slide { color: #1d2433; }   // a slide is a slide: stays light

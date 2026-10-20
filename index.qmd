@@ -1,0 +1,17 @@
+# About this book {.unnumbered}
+
+This is a story, and it's also the way you will learn the finite element method from AE 370. The story is fictional, but I hope you find truth behind the made up content, about human behavior and how it interacts with engineering.
+
+You'll read about one chapter before each class session. The mathematics lives *inside* the story: in the code the characters write, the plots they make, the emails they send, and the puzzles they can't solve yet. Read it the way you would a mystery: notice what doesn't add up, and keep going. Every number and every figure in the book is computed by real code, and the code is shown wherever a character looks at it.
+
+The book builds on Lectures 16–17 (global spectral methods for BVPs). It doesn't repeat them.
+
+## Acknowledgments
+
+To Tess, for loving stories with me, and for teaching me to understand what makes them worth telling.
+
+This book was written with Claude, Anthropic's AI model, as an extensively and iteratively used resource. The idea of teaching through a fictional story, its basic premise and key characters, the framing of the technical content, and the overall technical topic (the finite element method) were my choices, as were the Quarto book format and the flipped classroom in which students work through the course content in this narrative form. Over twenty-seven versions of back-and-forth, Claude was invaluable in fleshing out the characters; finalizing the narrative structure and its details; developing successively more detailed scene beats; drafting and refining prose; deciding the engineering setting and the boundary value problem around which the method is described; and proposing the numerical puzzles that give the story its *whodunit* elements.
+
+— Andres Goza
+
+
