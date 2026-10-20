@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Better than good – Between the Nodes</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/03-the-messy-ones.html" rel="next">
+<link href="../chapters/01-maras-code.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-25855274aaae0edcb6a88ca50476d85d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-52d5803e6c8ddc1c5663ec64fb66b748.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-25855274aaae0edcb6a88ca50476d85d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-fba32274148bb83c47e8d216b746dbdb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-1ad248c0c725b239c2152f44bab456a3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-fba32274148bb83c47e8d216b746dbdb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/02-better-than-good.html"><span class="chapter-title">Better than good</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Between the Nodes</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About this book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-cold-open.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2:14 a.m.</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-maras-code.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mara’s code</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-better-than-good.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Better than good</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-the-messy-ones.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">The messy ones</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-show-them.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Show them</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Better than good</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>It’s 11:40 at night, and Luis has had Joyce’s email open since four.</p>
+<div class="email">
+<div class="email-head">
+<p><strong>From:</strong> Joyce Abernathy</p>
+<p><strong>To:</strong> Luis Arroyo</p>
+<p><strong>Subject:</strong> everything</p>
+</div>
+<div class="email-body">
+<p>Notebooks, scratch work, dead ends. The messy ones too. No rush, but I’m up early.</p>
+<p>— J</p>
+</div>
+</div>
+<p><em>No rush, but I’m up early.</em> That’s a deadline. He knows a deadline when it’s being polite.</p>
+<p>He opens a new notebook, names it <code>for_joyce.ipynb</code>, looks at the empty first cell, and doesn’t type anything. Instead he does the thing he’s been not doing for a week. He opens the thread.</p>
+<div class="email">
+<div class="email-head">
+<p><strong>From:</strong> Dennis Hale, Senior Thermal Analyst</p>
+<p><strong>To:</strong> thermal-numerics@falkenrath-voss.com</p>
+<p><strong>Subject:</strong> RE: Mara’s code can’t see the glue</p>
+</div>
+<div class="email-body">
+<p>This code has twenty years of successful flights behind it. A plot of an output we explicitly don’t use is not evidence. Please don’t send things like this to the full list.</p>
+</div>
+</div>
+<div class="email">
+<div class="email-head">
+<p><strong>From:</strong> Kurt Sorensen</p>
+<p><strong>To:</strong> thermal-numerics@falkenrath-voss.com</p>
+<p><strong>Subject:</strong> RE: Mara’s code can’t see the glue</p>
+</div>
+<div class="email-body">
+<p>The convergence check passed. That’s what it’s for.</p>
+</div>
+</div>
+<div class="email">
+<div class="email-head">
+<p><strong>From:</strong> Brandon Kowalczyk</p>
+<p><strong>To:</strong> Luis Arroyo</p>
+<p><strong>Subject:</strong> RE: Mara’s code can’t see the glue</p>
+</div>
+<div class="email-body">
+<p>Let’s talk before you send anything else to the list.</p>
+</div>
+</div>
+<p>There are eleven more like the first two. None about the sweep.</p>
+<p>He reads them in order, then out of order, as if they might read differently in another order.</p>
+<p>None of them is about the plot. They’re about the time stamp. The list. The tone. The code’s age. <em>Twenty years of successful flights.</em> On thick bondlines, on stacks where the glue is four millimeters wide and a polynomial can see it. That’s the point. That was the whole point of the email. <em>The convergence check passed. That’s what it’s for.</em> Yes. And it passed because both of its runs were blind. That’s the other point. It was in the email too, in one sentence, with a plot attached.</p>
+<p>He did exactly what Brandon told him to do after the mesher. He showed them. The sweep, the zoom, the reason in one paragraph. Nobody has to read a report to see a curve go through a dashed line.</p>
+<p>And Brandon, to him alone: <em>Let’s talk before you send anything else to the list.</em> Luis knows what <em>let’s talk</em> means. Last time it meant three weeks of reports. It means somebody has already decided the problem is him.</p>
+<p>He opens a reply and types: <em>If anyone on this list can read a semilog plot, I’m happy to walk them through the part where the number goes over the limit.</em> He reads it twice. It’s good. It’s exactly right, and it would get him fired by Friday. He deletes it one word at a time, so he can enjoy each word on its way out.</p>
+<p>At two in the morning last week he’d thought the hard part was over. He’d thought that this time the evidence was so clear it would do the arguing for him. The first step toward a new era. He actually thought the words <em>new era</em>, in his own head. Luis closes his eyes, and a groan comes out of him before he can stop it.</p>
+<p>Is it him? He’s been sure that everyone around him is literally stupid. Unable to read hard, objective facts put right in front of them. Either incompetent or deliberately blockheaded. The mesh generator all over again. And now Brandon’s email, just to him.</p>
+<p>Brandon presumably isn’t sending one-off emails to the thermal analysts. Could this somehow be his fault? He really can’t see how. But he believes in data, and the data seems to point one way.</p>
+<p>Well, not all the data. The meeting with Joyce in 4C comes back to him, and it doesn’t fit with any of this.</p>
+<p>She agreed with him. First thing, before she’d even sat down properly: <em>You’re right about the glue.</em> He’d had a whole column of answers ready, and none of them were for that. Then she asked about the math. Not the tone, not the list: how it worked. She said <em>I don’t know why that’s true</em> out loud, in a conference room, like it cost her nothing. Nobody at Falkenrath-Voss has asked him how anything works. Not once, in two years.</p>
+<p>And then: <em>Right now, you’re the only person in this building who can check you. That’s a lonely place to be right.</em></p>
+<p>His first reaction, in the room, was that it was a compliment. The only person who can check him. Wasn’t that the point? Only one person can be right in an argument. It’s lonely by design. His second reaction, on the drive home, was that she hadn’t said it like a compliment. She’d said it the way you’d point out a loose wire. He has turned it over every way since, and it won’t sit still.</p>
+<p>What if there’s something he can’t see either?</p>
+<p>He sniffs sharply, as if he could push the thought out through his nose. Then he does what he always does when he needs somewhere else to put his head. He works.</p>
+<p>The notebook is for her. She’s the one reader who might judge it on what’s in it, which means it has to be undebatable. No gaps. No <em>obvious</em>. And it has to start where she starts, which is Mara’s code. Twenty years of running it. She doesn’t need Tent explained from scratch. She needs to know what’s different, and that turns out to be one thing.</p>
+<div class="notebook">
+<p><strong>1. What Tent is</strong></p>
+<p>Tent is Mara’s method with one change.</p>
+<p>Same BVP: <span class="math inline">\(-(k\,u')' = f\)</span> through the stack, with the hot-face and cold-face temperatures carried by a known function, the way Mara’s code carries them. Same three steps:</p>
+<ol type="1">
+<li>Choose a subspace <span class="math inline">\(\mathcal{V}\)</span> and a basis for it.</li>
+<li>Make the residual orthogonal to <span class="math inline">\(\mathcal{V}\)</span>: <span class="math inline">\(\;(f + (k\,u_a')',\, b_k) = 0\;\)</span> for every basis function <span class="math inline">\(b_k\)</span>. Integrate by parts (the face terms drop out), and that’s <span class="math inline">\(\;\sum_j c_j\,a(b_j, b_k) = (f, b_k)\)</span>, with <span class="math inline">\(a(b_j, b_k) = \int k\,b_j'\,b_k'\,dx\)</span>.</li>
+<li>Solve the linear system for the coefficients.</li>
+</ol>
+<p>Mara chose <span class="math inline">\(\mathcal{V}\)</span> = polynomials of degree <span class="math inline">\(n\)</span> across the whole stack. Every one of her basis functions spans all 40 mm, smooth from the hot face to the cold one. Nothing in that subspace can bend inside 0.4 mm, so nothing in it can see the glue. Steps 2 and 3 were never the problem.</p>
+<p><strong>Tent changes step 1, and only step 1. Its subspace is built the finite element way, which makes Tent a finite element method.</strong></p>
+</div>
+<p>He reads it back. Good. Under the notation, the recipe is short. Every equation is one test: take the residual, weigh it against one basis function, and require the result to be zero. One test per basis function, and one unknown coefficient per basis function, so the system always comes out square. That’s the whole method.</p>
+<p>She knows steps 2 and 3 better than he does; her group ran them for twenty years. The only thing new to her is step 1, and step 1 is all about polynomials built locally, on a chopped-up version of the domain itself.</p>
+<p>So step 1 doesn’t start with functions. It can’t. It starts with the stack. Mara’s subspace could be written down without knowing anything about the stack: polynomials of degree <span class="math inline">\(n\)</span>, done. Tent has to cut the stack into pieces first, <strong>elements</strong>, joined at <strong>nodes</strong>. In principle the nodes can go anywhere, as many as you like. But the obvious place for them is every place the material changes. That’s the one thing Mara’s code can’t do: her polynomials live on the whole stack at once, and can’t treat one stretch of it differently from another. So Tent puts its nodes at the material edges.</p>
+<div class="notebook">
+<div id="08f246cc" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> falkenrath <span class="im">import</span> tent, KESTREL_B <span class="im">as</span> stack</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>nodes <span class="op">=</span> tent.solve(stack, per_layer<span class="op">=</span><span class="dv">1</span>).nodes  <span class="co"># at interfaces</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> e <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(nodes) <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    a, b <span class="op">=</span> nodes[e], nodes[e <span class="op">+</span> <span class="dv">1</span>]</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"element </span><span class="sc">{</span>e<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>a<span class="sc">:4.1f}</span><span class="ss"> -&gt; </span><span class="sc">{</span>b<span class="sc">:4.1f}</span><span class="ss"> mm,"</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f" width </span><span class="sc">{</span>b<span class="op">-</span>a<span class="sc">:4.1f}</span><span class="ss"> mm"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="fl">1.4</span>))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>names <span class="op">=</span> [<span class="st">"tile"</span>, <span class="st">"glue"</span>, <span class="st">"structure"</span>]</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> a, b, name <span class="kw">in</span> <span class="bu">zip</span>(nodes[:<span class="op">-</span><span class="dv">1</span>], nodes[<span class="dv">1</span>:], names):</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    ax.axvspan(a, b, alpha<span class="op">=</span><span class="fl">0.5</span> <span class="cf">if</span> name <span class="op">==</span> <span class="st">"glue"</span> <span class="cf">else</span> <span class="fl">0.15</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>               color<span class="op">=</span><span class="st">"gray"</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    ax.text((a <span class="op">+</span> b) <span class="op">/</span> <span class="dv">2</span>, <span class="fl">0.55</span>, name, ha<span class="op">=</span><span class="st">"center"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>ax.plot(nodes, <span class="dv">0</span> <span class="op">*</span> nodes, <span class="st">"ko"</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(<span class="op">-</span><span class="fl">0.3</span>, <span class="dv">1</span>)<span class="op">;</span> ax.set_yticks([])</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"depth (mm)"</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>element 1:  0.0 -&gt; 24.0 mm, width 24.0 mm
+element 2: 24.0 -&gt; 24.4 mm, width  0.4 mm
+element 3: 24.4 -&gt; 40.0 mm, width 15.6 mm</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-better-than-good_files/figure-html/cell-3-output-2.png" width="1023" height="271" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>Three elements, four nodes. The tile is one element, 24 millimeters wide. The glue is one element too, 0.4 millimeters wide, 60 times narrower than the tile next to it: at this scale, two dots nearly on top of each other. Mara’s polynomial had to stretch across all of it. Here the glue gets an element of its own, and the element doesn’t care how thin it is.</p>
+<p>He starts the next markdown cell.</p>
+<div class="notebook">
+<p><strong>2. The subspace</strong></p>
+<p>The solution lives in the space of</p>
+</div>
+<p>And stops.</p>
+<p>The space of what? <em>Continuous functions that are straight on every element.</em> True. But it doesn’t say why. It’s the kind of sentence that comes back with <em>and?</em> written next to it. Why straight lines? Why not something even simpler? Why continuous? What does that buy you, and why should she believe it’s enough? To him the answers are obvious. What he doesn’t have is the sentence that makes the questions unnecessary.</p>
+<p>He knows where he first heard it said that way, though. A room that smelled like whiteboard markers, junior year, and a man who never once let a sentence get away with being merely true.</p>
+<div class="flashback">
+<p><span class="when">Junior year</span></p>
+<p>Room 112 of the Halston State engineering building had been renovated, according to a plaque by the door, in 1987. It felt older, despite the fresh floor wax. The seats in the third row leaned back a few degrees further than they were meant to. Luis sat there anyway. The third row was close enough to read Pruitt’s handwriting and far enough back that Pruitt had to look for you.</p>
+<p>Dr.&nbsp;Pruitt never started with a review. Finally, someone who gave the students some credit. Every other professor spent minutes, literally minutes, at the start of every lecture reminding people what they’d just covered, how it fit into the bigger picture, what came next. <em>Bro, we were there.</em> Pruitt didn’t waste their time. He walked in, picked up a marker, and started.</p>
+<p>“Last time,” he said, writing as he talked, “you solved a boundary value problem with polynomials defined on the whole domain. Each one was defined without reference to any particular place in it. Today we do it the other way around. We cut the domain first. Then we decide what a function is allowed to do on each piece.” Under the words he drew the domain, and then the cuts: a line, with dots where the pieces met.</p>
+<div class="board">
+<p>mesh first, functions second</p>
+<div id="4e80067b" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-better-than-good_files/figure-html/cell-4-output-1.png" alt="Pruitt's board: a line cut into five elements at six nodes, x0 to x5." width="825" height="192" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>nodes <span class="math inline">\(x_0, x_1, \dots, x_n\)</span> &nbsp;·&nbsp; elements <span class="math inline">\([x_{k-1}, x_k]\)</span></p>
+</div>
+<p>Luis knew that picture. It was the grid from finite differences, five weeks back: the same dots, the same spacing. He liked that more than he expected to. Something old, made to do something new.</p>
+<p>“In a spectral method with global polynomials,” Pruitt went on, “you could write the subspace down before you knew anything about the domain. Polynomials of degree <span class="math inline">\(n\)</span>. Done.” He wrote it, and crossed it out. “Here, the subspace cannot even be stated until the mesh is. For the second-order boundary value problem we’ve been working on, for example, the most common choice is this,” and he leaned in to the board to write it.</p>
+<div class="board">
+<p><span class="math inline">\(\mathcal{V}_n = \{\, v \;:\; v\)</span> continuous, linear on each element, <span class="math inline">\(v(a) = v(b) = 0 \,\}\)</span></p>
+</div>
+<p>“Is it a subspace? Three checks. You have three minutes.” Pruitt capped the marker and folded his arms with his back to the board, the way he did when he meant to wait the full three minutes even if everyone finished in one. It was the one concession he made. No reviews at the start of class, no hand-holding homework (his homework was properly hard). But he gave class time to working out the basics.</p>
+<p>Around Luis, pencils. Two seats over, someone drew axes. Luis didn’t need to. He could see it was a subspace. He pictured two functions, each a string of straight segments pinned to zero at both ends, bending only at the dots. Add them. A segment plus a segment is a segment. The bends stay at the dots. Zero plus zero is zero.</p>
+<div class="mindseye">
+<div id="98cd6ea8" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-better-than-good_files/figure-html/cell-5-output-1.png" alt="Two piecewise-linear functions on the same mesh, and their sum: still straight between the nodes, still zero at both ends." width="825" height="278" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>Done. The zero function was obviously in. Scaling was the same picture, taller. He leaned back and looked at the clock: two minutes and forty seconds left.</p>
+<p>Two minutes and forty seconds is a long time to spend on a line plus a line. He spent it the way he often did when he was bored in class, doing arithmetic he didn’t want to do. Tuition here, minus his scholarship. Tuition at the other school that had said yes, the one whose name people said a little slower, in hushed tones, like they were in church, minus the aid it had offered, which came nowhere close. Plus his mother’s catering van, which didn’t drive itself to weddings on Saturdays.</p>
+<p>No.&nbsp;Luis blinked and stopped himself. Self-indulgent pity party. He looked back up at the board. Could he guess what Pruitt would write next?</p>
+<p>It wasn’t only the mesh that was like finite differences. The functions were going to depend on the grid too. In finite differences, the little polynomials slid along with whichever point you were working at; these looked like they’d be pinned to points on the domain as well. But how? And how would that be any different from finite differences?</p>
+<p>He checked the clock. One minute. Guessing Pruitt’s next move was a much better game.</p>
+<p>He thought back. Finite differences made the differential equation hold at each grid point, with the derivatives swapped for differences. But this was coming out of the spectral methods, so it had to start from a weak form instead. He couldn’t see all the details yet, but it was a start. So then—</p>
+<p>“Time,” Pruitt said. Oh, come on. He’d almost had it.</p>
+<p>Pruitt went through the three checks in order, exactly as the notes had them. Luis watched him and thought, not for the first time, that Pruitt taught like a man who’d expected to be doing it somewhere else.</p>
+<p>Then Pruitt turned to the room. “Now. Why lines?” On the mesh he drew a function that was flat on every element, a constant instead of a line, and jumped at every dot: a staircase. “These are even more local. One number per element. Easier to integrate. Why not these?” And through the staircase, two quick dashed strokes: an X.</p>
+<div class="board">
+<div id="45afd7a4" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-better-than-good_files/figure-html/cell-7-output-1.png" alt="A staircase function, constant on each element and jumping at every node, crossed out with a dashed X." width="825" height="253" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>The kind of silence where everyone finds something in their notebook that keeps their eyes off Pruitt’s.</p>
+<p>“They jump,” Luis said. He hadn’t raised his hand. He had never spoken in this class before, or in any other at Halston. Luis found himself wondering why he’d answered now. Because, he decided, this was the first class that deserved it. The first one that trusted its students to think for themselves and do hard things.</p>
+<p>Pruitt turned around. “And?”</p>
+<p>“And the integral term needs a slope. A step doesn’t have one at the jump.”</p>
+<p>A pause, long enough for Luis to replay the answer, check it for mistakes, and find none.</p>
+<p>“Name.”</p>
+<p>“Luis Arroyo.”</p>
+<p>“Mr.&nbsp;Arroyo. I defined this subspace <span class="math inline">\(\mathcal{V}_n\)</span> for the rod equation. What if we were instead dealing with a beam?”</p>
+<p>Pruitt’s voice didn’t rise at the end, the way it would for a genuine question. It was a test. “The integral needs two derivatives now,” Luis said. “So the slope can’t jump either. Lines won’t do it.”</p>
+<p>“Correct,” Pruitt said. “Both times.” He let that sit for exactly one second. “Now say the first one properly.”</p>
+<p>Behind Luis, somebody gave a small cough. “I did.”</p>
+<p>“You said it so that the people in this room understood it. Say it so that a referee can’t misunderstand it.”</p>
+<p>Luis looked at the staircase on the board. He <em>had</em> said it. The jump, the slope, the integral: that was the whole thing. Pruitt didn’t want a better answer. He wanted the same answer in fancier words.</p>
+<p>“The weak form for the rod equation,” Luis said slowly, “puts one derivative on each function. Piecewise constants don’t have a derivative at the nodes.”</p>
+<p>“Better.” Pruitt wrote it on the board word for word and underlined <em>weak form</em>. “Say it that way the first time, Mr.&nbsp;Arroyo, and people will believe you the first time.” He capped the marker. “Next time: a basis.”</p>
+<p>Class over. No fanfare. Pruitt set the marker in the tray, went to the desk, bent over it, and started writing on a sheet of paper.</p>
+<p>Luis grabbed his backpack and waited for the rest of the third row to file out ahead of him. By the time he reached the door, Pruitt was standing in it, holding the sheet. He handed it to Luis.</p>
+<p>“Three more problems,” he said. “Not for credit. Due with the others.”</p>
+<p>No course number at the top, and sure enough, three problems in Pruitt’s handwriting. Had he gone straight from the board to his desk and made these up, just now, for him?</p>
+<p>“Why?” Luis said, before he could decide whether that was a good idea.</p>
+<p>Pruitt looked at him the way he looked at a board he hadn’t finished erasing. “Because you finished in twenty seconds and spent the rest looking at the clock.” And he left.</p>
+<p>Luis stood in the doorway of Room 112 with the sheet in his hand. It was the best thing anyone at Halston State had said to him, and it was homework. He couldn’t tell whether he’d been chosen or sentenced. He folded the sheet once, carefully, and put it in the inside pocket of his bag, where he kept the things he didn’t want bent.</p>
+</div>
+<p><em>Say it that way the first time.</em> The cursor is still blinking after <em>the space of</em>.</p>
+<p>He rereads cell 1. Every integral in the weak form of this problem looks like <span class="math inline">\(\int k\,u'\,v'\,dx\)</span>: one derivative on each function. So the functions can be built piece by piece, one element at a time; that’s the whole point, a different piece for each material. But they need a slope everywhere the integral looks. Constants on each element are the simplest pieces, and they jump at every node, where there’s no slope at all. Lines, joined at the nodes so that nothing jumps, are the simplest pieces that work.</p>
+<p>He types it, and halfway through the second sentence he notices he’s typing it the way Pruitt underlined it.</p>
+<div class="notebook">
+<p><strong>2. The subspace</strong></p>
+<p>The solution lives in the space of functions that are continuous through the stack, linear on each element, and zero at the hot and cold faces (the face temperatures are carried separately, as in Mara’s code). Lines, because every integral in the weak form of steady heat conduction looks like <span class="math inline">\(\int k\,u'\,v'\,dx\)</span>: one derivative on each function. Continuous, because a function that jumps at a node has no derivative there.</p>
+</div>
+<p>He leaves it. It’s right. He’d just rather it didn’t sound like Pruitt.</p>
+<p>Now a basis for the space. That’s the key piece. The whole game is to require the numerical solution to live in the subspace, and with a basis for the subspace, the numerical solution is guaranteed to be a linear combination of the basis functions. Only the coefficients in that combination are unknown.</p>
+<p>Here the space is piecewise-linear functions, and for that space everyone calls the basis functions hat functions. Pruitt called them hat functions, and for a whole semester he circled every <em>tent</em> on Luis’s extra sheets in red and wrote <em>hat</em> next to it. One per node: 1 at its own node, 0 at every other, a straight line up from each neighbor and straight down to the next. A hat is something you wear. These are pitched over the ground and pegged at the neighbors. Tents. When the world settles on a convention and the convention is wrong, you adopt a new one.</p>
+<p>The formula for these basis functions is the boring part, so he writes it first and gets it out of the way.</p>
+<div class="notebook">
+<p><strong>3. The tents</strong></p>
+<p>One per node. With element widths <span class="math inline">\(h_k = x_k - x_{k-1}\)</span> (uneven here: the glue’s is 0.4 mm), <span class="math display">\[
+b_k(x) = \begin{cases}
+\dfrac{x - x_{k-1}}{h_k} &amp; x_{k-1} \le x \le x_k \\[1.2ex]
+\dfrac{x_{k+1} - x}{h_{k+1}} &amp; x_k \le x \le x_{k+1} \\[1.2ex]
+0 &amp; \text{otherwise}
+\end{cases}
+\]</span></p>
+</div>
+<p>Then the part that isn’t boring. He draws every tent on the real stack.</p>
+<div class="notebook">
+<div id="19879a50" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tent(k, x, nodes):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""The formula above: 1 at node k, 0 at the others."""</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    e <span class="op">=</span> np.zeros(<span class="bu">len</span>(nodes))<span class="op">;</span> e[k] <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.interp(x, nodes, e)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, stack.thickness, <span class="dv">4001</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>fig, (ax, zm) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="fl">2.8</span>),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    gridspec_kw<span class="op">=</span>{<span class="st">"width_ratios"</span>: [<span class="dv">3</span>, <span class="fl">1.2</span>]})</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>last <span class="op">=</span> <span class="bu">len</span>(nodes) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(last <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    ls <span class="op">=</span> <span class="st">"-"</span> <span class="cf">if</span> <span class="dv">0</span> <span class="op">&lt;</span> k <span class="op">&lt;</span> last <span class="cf">else</span> <span class="st">":"</span>   <span class="co"># faces fixed</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> a <span class="kw">in</span> (ax, zm):</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        a.plot(x, tent(k, x, nodes), ls, label<span class="op">=</span><span class="ss">f"b</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> a <span class="kw">in</span> (ax, zm):</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    a.plot(nodes, <span class="dv">0</span> <span class="op">*</span> nodes, <span class="st">"ko"</span>, ms<span class="op">=</span><span class="dv">4</span>)       <span class="co"># the nodes</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>zm.set_xlim(<span class="fl">23.6</span>, <span class="fl">24.8</span>)<span class="op">;</span> zm.set_title(<span class="st">"the glue"</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"depth (mm)"</span>)<span class="op">;</span> zm.set_xlabel(<span class="st">"depth (mm)"</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>ax.legend(loc<span class="op">=</span><span class="st">"center left"</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-better-than-good_files/figure-html/cell-9-output-1.png" width="1264" height="429" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>Four tents. But <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_3\)</span>, the dotted ones, aren’t basis functions of the space. The temperature at both faces is fixed, so there’s nothing to solve for there; the only unknowns live on tents that are zero at the faces. The space is built entirely from <span class="math inline">\(b_1\)</span> and <span class="math inline">\(b_2\)</span>.</p>
+<p>Neither of them stands over the glue. There’s no node in the middle of the glue to pitch one on. The glue is a single element, so it gets what every element gets: the downhill side of one tent and the uphill side of the next. In the zoom they cross like an X. <span class="math inline">\(b_1\)</span>, the tent at the glue’s hot face, climbs for 24 millimeters across the tile and then drops to zero across the glue’s 0.4. <span class="math inline">\(b_2\)</span>, at its cold face, does the reverse: straight up across the glue, then a long, slow walk down through the structure. Lopsided. Each is nonzero only on the two elements touching its node, however wide or narrow those happen to be.</p>
+<p>The numerical solution has to be a combination of these tents. And the tents were built cleverly: designed so that the coefficients in that combination are just the numerical solution’s own values at the nodes.</p>
+<div class="notebook">
+<p><strong>4. The coefficients are the temperatures</strong></p>
+<p><span class="math inline">\(b_k\)</span> is 1 at node <span class="math inline">\(k\)</span> and 0 at every other node. So in the numerical solution <span class="math inline">\(u_a = \sum_k u_k\, b_k\)</span>, every term but one vanishes at node <span class="math inline">\(j\)</span>, and <span class="math inline">\(u_a(x_j) = u_j\)</span>. <strong>The coefficients are the temperatures at the nodes.</strong> That’s why Tent can report the temperature at the glue’s hot face directly: it’s one of the unknowns.</p>
+</div>
+<p>Of course, to guarantee that the finite element solution <span class="math inline">\(u_a\)</span> can be written in terms of these tents at all, he has to prove the tents form a basis for the subspace: that every function in the space can be written as a combination of them, and in only one way. He knows they are. He could draw why in thirty seconds.</p>
+<p>His hand slows over the empty cell anyway. He has drawn this before, for someone, and it came back marked in red.</p>
+<div class="flashback">
+<p><span class="when">Junior year, three weeks later</span></p>
+<p>Homework came back on Tuesdays, face down, passed along the rows. Luis turned his over and went straight to problem 3.</p>
+<div class="homework">
+<p><strong>3.</strong> Show that the hat functions form a basis for <span class="math inline">\(\mathcal{V}_n\)</span>.</p>
+<div id="5d244c8a" class="cell" data-execution_count="9">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-better-than-good_files/figure-html/cell-10-output-1.png" alt="Luis's homework drawing: a piecewise-linear function, and dashed tents each scaled to its node value, adding up to it." width="676" height="241" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>On each element only two tents <span class="redink">hat</span> are nonzero. Scale each by <span class="math inline">\(v\)</span> at its node and add: on every element that’s a line with the right value at both ends, and two points fix a line. So it’s <span class="math inline">\(v\)</span>. ∎</p>
+<p><span class="redink">The picture is right. Now prove it. Write <span class="math inline">\(v\)</span> on <span class="math inline">\([x_{k-1}, x_k]\)</span> from the formulas for <span class="math inline">\(b_{k-1}\)</span> and <span class="math inline">\(b_k\)</span>. Independence: one line. Evaluate at the nodes. You drew a proof. Write one.</span></p>
+<p><span class="redink grade">94</span></p>
+<p><span class="redink">You’re better than this.</span></p>
+</div>
+<p>Six points off. For an answer Pruitt had just called right, in red, in his own handwriting. The picture <em>was</em> the proof. The two sentences under it <em>were</em> the argument; anyone could check them by looking. What Pruitt wanted was the same thing again in symbols, for the sake of the symbols. And <em>hat</em>, again, next to the word Luis had chosen on purpose.</p>
+<p>The paper on the next desk was turned face up, and Luis could read it without trying.</p>
+<div class="homework">
+<p><strong>3.</strong> There are <span class="math inline">\(n+1\)</span> hat functions and <span class="math inline">\(\mathcal{V}_n\)</span> has dimension <span class="math inline">\(n+1\)</span>, so they are a basis. To write <span class="math inline">\(v = \sum_k c_k b_k\)</span>, take each <span class="math inline">\(c_k\)</span> to be the average of <span class="math inline">\(v\)</span> over element <span class="math inline">\(k\)</span>. For example, this <span class="math inline">\(v\)</span> is in <span class="math inline">\(\mathcal{V}_n\)</span>:</p>
+<div id="464326e4" class="cell" data-execution_count="10">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-better-than-good_files/figure-html/cell-11-output-1.png" alt="A function that is straight on each element but jumps at a node." width="453" height="179" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><span class="redink">Good start! A few things to tidy up. Let’s go over it together. See me.</span></p>
+<p><span class="redink grade">70</span></p>
+</div>
+<p>Three mistakes, and he saw all of them before he’d finished reading. The ends of the space are pinned at zero, so the two tents at the ends aren’t in it: the number of basis functions is <span class="math inline">\(n-1\)</span>, not <span class="math inline">\(n+1\)</span>. And the coefficients aren’t averages; a tent is 1 at its own node and 0 at the others, so the coefficient <em>is</em> the value at the node, and an average would smear in the neighbors. And the example jumps at a node, which means two values at one node and one coefficient to hold them: it’s not in the span, and since it isn’t continuous, it isn’t in the space either.</p>
+<p>That submission was worth a forty, generously. It got the kind handwriting and an invitation. He got <em>you’re better than this</em>.</p>
+</div>
+<p>Years later, at his own kitchen table, the cursor is still sitting in the empty cell.</p>
+<p>Fine. He writes it.</p>
+<div class="notebook">
+<p><strong>5. The tents are a basis</strong></p>
+<p>On <span class="math inline">\([x_{k-1}, x_k]\)</span> only <span class="math inline">\(b_{k-1}\)</span> and <span class="math inline">\(b_k\)</span> are nonzero, and for any <span class="math inline">\(v\)</span> in <span class="math inline">\(\mathcal{V}_n\)</span>, the piecewise-linear subspace from cell 2,</p>
+<p><span class="math display">\[
+v(x_{k-1})\,b_{k-1}(x) + v(x_k)\,b_k(x) \;=\; v(x_{k-1})\,\frac{x_k - x}{h_k} + v(x_k)\,\frac{x - x_{k-1}}{h_k},
+\]</span> the line through <span class="math inline">\((x_{k-1}, v(x_{k-1}))\)</span> and <span class="math inline">\((x_k, v(x_k))\)</span>. Since <span class="math inline">\(v\)</span> is in <span class="math inline">\(\mathcal{V}_n\)</span>, it is itself a line on that element, and two points fix a line, so this <em>is</em> <span class="math inline">\(v\)</span> there. So <span class="math inline">\(v = \sum_k v(x_k)\,b_k\)</span>: <strong>they span all of <span class="math inline">\(\mathcal{V}_n\)</span>.</strong> If <span class="math inline">\(\sum_k c_k b_k = 0\)</span>, evaluate at <span class="math inline">\(x_j\)</span>: <span class="math inline">\(c_j = 0\)</span>. <strong>They’re independent.</strong></p>
+</div>
+<p>Four minutes, to write the proof without a picture. He resents every one of them. Then he reads it back next to the picture he’d have drawn, and has to admit they aren’t the same thing said twice. Or at least they’re two different ways of saying it. He brushes the thought away.</p>
+<hr>
+<p>Basis done. He types the next header, <strong>6. The system</strong>. Now that <span class="math inline">\(u_a\)</span> is written in terms of the tents, the only thing left is to find the coefficients: the nodal values of <span class="math inline">\(u_a\)</span>. For that he needs as many equations as there are unknown coefficients, a square system he can solve.</p>
+<p>His eyes go to the empty cell. This part is Mara’s step 2, unchanged. The finite element method is still a spectral method: it gets its equations by making the residual orthogonal to the subspace, which means orthogonal to every basis function in it, here every tent. Put <span class="math inline">\(u_a = \sum_j u_j\, b_j\)</span> into step 2, test it against tent <span class="math inline">\(b_k\)</span>, and the integral splits term by term, one term per tent. For each <span class="math inline">\(k\)</span>, <span class="math display">\[\sum_j u_j\,a(b_j, b_k) = (f, b_k).\]</span> Still the Galerkin method. Still the recipe from cell 1. All the finite element method changed was which functions go into the integrals. So now the whole game is <span class="math inline">\(a(b_j, b_k) = \int k\,b_j'\,b_k'\,dx\)</span>, tent against tent.</p>
+<p>One equation per interior tent, stacked up, is a matrix system, <span class="math inline">\(Au = f\)</span>, with <span class="math inline">\(A_{kj} = a(b_j, b_k)\)</span> and <span class="math inline">\(f_k = (f, b_k)\)</span>. And since the coefficients are the temperatures at the nodes, the unknown vector <span class="math inline">\(u\)</span>, the <span class="math inline">\(u_j\)</span> stacked up, <em>is</em> the temperature at every interior node. Solving the system is solving for the temperatures.</p>
+<p>So the work now is building that system, and that means evaluating each <span class="math inline">\(a(b_j, b_k)\)</span>. He starts with <span class="math inline">\(a(b_1, b_1)\)</span>, the tent at the glue’s hot face. He looks at its two sides. 24 millimeters on the left. 0.4 on the right. Every textbook draws these things evenly spaced, as if the world came in equal pieces.</p>
+<p><em><span class="math inline">\(h\)</span> on the left, <span class="math inline">\(H\)</span> on the right.</em></p>
+<p>He has heard that said out loud before, while he was holding a marker, defending himself in front of a room full of students.</p>
+<div class="flashback">
+<p><span class="when">Junior year, the review before the midterm</span></p>
+<p>By the midterm review, Luis had handed in four of Pruitt’s extra sheets, one with every homework. Every one came back with the problems marked right and every <em>tent</em> circled in red, <em>hat</em> written beside it in the margin, small and neat, like a correction to a typo. He’d stopped arguing about it on paper. He hadn’t stopped writing <em>tent</em>.</p>
+<p>Pruitt ran a review the way he ran everything else: as if nobody had seen any of it before. Today it was the matrix. He had a mesh on the board, and he was building the rows of <span class="math inline">\(A\)</span> out loud. “Each entry is <span class="math inline">\(a\)</span> of two hat functions. Hat function <span class="math inline">\(k\)</span> against hat function <span class="math inline">\(j\)</span>. A hat function overlaps only its neighbors, so the hat functions—”</p>
+<p>Five times in ten minutes. Luis had started counting.</p>
+<p>“Tents,” he said. He meant it for himself, mostly. It came out a little louder than that.</p>
+<p>Two rows back, someone snickered.</p>
+<p>Pruitt didn’t turn around. He finished the line he was writing, capped the marker, and only then faced the room. “Mr.&nbsp;Arroyo prefers his own vocabulary.” He held the marker out, pointing it at Luis. “Let’s see whether it gets him through the board.”</p>
+<p>No freaking way he was serious. Not even Pruitt would make someone come up and teach, on the spot.</p>
+<p>Luis was frozen in his seat. The whole room was quiet; he was sure nobody was breathing.</p>
+<p>Pruitt hadn’t moved either. The marker was still in his hand, still pointed at Luis.</p>
+<p>Luis swallowed. His chair squeaked as he stood and edged along his row toward the board. It was twenty-five steps, and Luis heard every one of them. His face was hot before he got there. The marker was still warm from Pruitt’s hand.</p>
+<p>“Row <span class="math inline">\(k\)</span>,” Pruitt said. “Which entries are nonzero?”</p>
+<p>Luis looked up at the board. The domain was broken into elements and nodes, evenly spaced, and otherwise blank. He could feel his pulse in the side of his neck. <em>Breathe.</em> He knew this.</p>
+<p>He drew three tents over the nodes, one pitched on each. “Only with <span class="math inline">\(k-1\)</span>, <span class="math inline">\(k\)</span>, and <span class="math inline">\(k+1\)</span>. The others don’t overlap.” Easy. He drew them a little bigger than he needed to.</p>
+<div class="board">
+<div id="b3bcbc65" class="cell" data-execution_count="12">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-better-than-good_files/figure-html/cell-13-output-1.png" alt="Board: evenly spaced nodes k-2 to k+2, with tents pitched at k-1, k and k+1." width="800" height="266" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>“Slope of <span class="math inline">\(b_k\)</span> on the element to its right?”</p>
+<p>“Minus one over <span class="math inline">\(h\)</span>.” He drew the derivative of <span class="math inline">\(b_k\)</span> underneath his tents: a flat step up on the left, a flat step down on the right.</p>
+<div class="board">
+<div id="89242db3" class="cell" data-execution_count="13">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-better-than-good_files/figure-html/cell-14-output-1.png" alt="Board: the slope of b_k, a step of plus one over h on the element to its left and minus one over h on the element to its right." width="800" height="241" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>“So <span class="math inline">\(a(b_k, b_{k+1})\)</span>?”</p>
+<p>He shaded the one element the two tents shared. He was doing this. From Pruitt, no <em>wrong, Mr.&nbsp;Arroyo</em> was the same as <em>you’re killing it, Luis, great job</em>. He just had to not make a stupid mistake. He stepped back and let himself see what he’d drawn. This was about the area under the product of the two slopes, over the element he’d just shaded.</p>
+<div class="board">
+<div id="8f0c3aeb" class="cell" data-execution_count="14">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-better-than-good_files/figure-html/cell-15-output-1.png" alt="Board: the three tents with the element shared by b_k and b_(k+1) shaded, and under them the slopes of b_k (solid) and b_(k+1) (dashed); on the shared element one is minus one over h and the other plus one over h." width="800" height="475" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>Their slopes there were minus one over <span class="math inline">\(h\)</span> and plus one over <span class="math inline">\(h\)</span>; times <span class="math inline">\(k\)</span>, across a width of <span class="math inline">\(h\)</span>. “Minus <span class="math inline">\(k\)</span> over <span class="math inline">\(h\)</span>.” He was ahead of Pruitt now, writing the next line before the question came. He could do this asleep.</p>
+<p>“<span class="math inline">\(a(b_k, b_k)\)</span>?”</p>
+<p>“Two <span class="math inline">\(k\)</span> over <span class="math inline">\(h\)</span>.” Square the step and it’s positive on both sides; one <span class="math inline">\(k/h\)</span> from each.</p>
+<p>“Now the spacing isn’t uniform. Lowercase <span class="math inline">\(h\)</span> on the left, capital <span class="math inline">\(H\)</span> on the right.”</p>
+<p>Luis’s hand tensed. How was this not over? For half a second the board was too white; it didn’t have what he needed. The marker hovered.</p>
+<p>Then he saw it. It was all already there. He closed his eyes for a second and let himself see the picture with the spacing pulled apart.</p>
+<div class="mindseye">
+<div id="8187ed90" class="cell" data-execution_count="15">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-better-than-good_files/figure-html/cell-16-output-1.png" alt="Imagined: the same tents and slopes, but the element left of node k has width h and the one to its right a wider H; the slope of b_k is plus one over h on the left and minus one over H on the right." width="800" height="450" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>The left side was still one over <span class="math inline">\(h\)</span>, squared, across <span class="math inline">\(h\)</span>; the right side was the same thing with <span class="math inline">\(H\)</span>. “<span class="math inline">\(k\)</span> over little <span class="math inline">\(h\)</span>, plus <span class="math inline">\(k\)</span> over big <span class="math inline">\(H\)</span>.”</p>
+<p>“Row sums?”</p>
+<p>“Zero.”</p>
+<p>“Why?”</p>
+<p>“A constant has no slope.” Zero slope everywhere, so <span class="math inline">\(a\)</span> of a constant against anything is nothing.</p>
+<p>A beat. “Good.”</p>
+<p>Pruitt had never said that to him before. Not on a sheet, not out loud. Luis felt it land somewhere under his ribs and stay there. He was flying. He was very nearly grinning, and he turned back to the board so nobody would see it.</p>
+<p>“Then why doesn’t the first row sum to zero?”</p>
+<p>Nothing.</p>
+<p>The board was enormous, ready to swallow Luis. He could feel the shape of the answer, somewhere just to the left of where he was looking: something about the end, about what was and wasn’t there. The words wouldn’t come with it. The marker had gotten heavy. Behind him, forty people were being quiet in a way he could feel on the back of his neck. Pruitt waited exactly long enough for everyone to notice that he was waiting.</p>
+<p>Then he took the marker back.</p>
+<p>“Ms.&nbsp;Ortiz. On a hundred-node mesh, how many nonzeros in a row?”</p>
+<p>“Three.”</p>
+<p>“Good.”</p>
+<p>“That is literally the first question you asked me.” It was out before Luis had decided to say it. And he wasn’t going to apologize for it. He’d gotten six questions right, at the board, under a barrage. For all six he’d gotten one <em>good</em>, and not a warm one. Marcela Ortiz had just gotten the same <em>good</em>, a kinder one, for repeating his first answer.</p>
+<p>Pruitt was already writing. He didn’t turn around. “Don’t be sore because you missed a basic question, Mr.&nbsp;Arroyo. Sit down.”</p>
+<p>Twenty-five steps back. It felt like more. People pulled their feet in to let him by. The seat in the third row took him back at its usual angle, a few degrees further than it was meant to, the way everything in Room 112 leaned a little. His three tents stayed on the board for the rest of the hour. Pruitt wrote around them and never erased them.</p>
+</div>
+<p>Luis blinks, and he’s back at his kitchen table with the notebook for Joyce in front of him. But what he sees isn’t the screen. It’s the board, years ago, and every answer he gave on it. And every one of those answers was really about what a single element contributes to <span class="math inline">\(a(b_j, b_k)\)</span>; he just hadn’t been asked that way. Look one element at a time instead of one row at a time, and only two tents live there. Their slopes are plus and minus one over its width. Multiply, times <span class="math inline">\(k\)</span>, across the width. Work out each element’s piece, then put the pieces together. <em>Assembly</em>: that’s what they called it. He puts his fingers on the keyboard.</p>
+<div class="notebook">
+<p><strong>6. One element</strong></p>
+<p>On element <span class="math inline">\(e\)</span> (width <span class="math inline">\(h_e\)</span>, conductivity <span class="math inline">\(k_e\)</span>), only two tents are nonzero, with slopes <span class="math inline">\(+1/h_e\)</span> and <span class="math inline">\(-1/h_e\)</span>. So the element adds <span class="math display">\[
+\frac{k_e}{h_e}\begin{bmatrix} 1 &amp; -1 \\ -1 &amp; 1 \end{bmatrix}
+\]</span> to the rows and columns of its two nodes. A node between two elements collects one piece from each side: <span class="math inline">\(k/h + k/H\)</span>.</p>
+</div>
+<p>Now the assembly part. Build the whole matrix one element at a time and let the blocks overlap where the elements share a node.</p>
+<div class="notebook">
+<div id="1b4e088d" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> stack.conductivity     <span class="co"># tile, glue, structure</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(nodes) <span class="op">-</span> <span class="dv">1</span>         <span class="co"># elements</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.zeros((n <span class="op">+</span> <span class="dv">1</span>, n <span class="op">+</span> <span class="dv">1</span>))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> e <span class="kw">in</span> <span class="bu">range</span>(n):         <span class="co"># element e joins nodes e, e+1</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    h <span class="op">=</span> nodes[e <span class="op">+</span> <span class="dv">1</span>] <span class="op">-</span> nodes[e]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    Ae <span class="op">=</span> k[e] <span class="op">/</span> h <span class="op">*</span> np.array([[<span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>]])</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    A[e:e<span class="op">+</span><span class="dv">2</span>, e:e<span class="op">+</span><span class="dv">2</span>] <span class="op">+=</span> Ae</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">round</span>(A, <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[ 0.042 -0.042  0.     0.   ]
+ [-0.042  0.792 -0.75   0.   ]
+ [ 0.    -0.75   1.071 -0.321]
+ [ 0.     0.    -0.321  0.321]]</code></pre>
+</div>
+</div>
+</div>
+<p>Three blocks, each one dropped in on top of the last where they share a node. The two diagonal entries in the middle are where it shows: each is one block’s corner plus the next one’s. The thinnest element makes the loudest number: the glue’s <span class="math inline">\(k/h\)</span> is 18 times the tile’s.</p>
+<p>Everything off those three diagonals is zero, and it stays zero however many elements he adds, because a tent only ever overlaps its neighbors. Mara’s matrix was the opposite: every one of her polynomials spans the whole stack, so once there were layers, every entry filled in. A thousand elements here means a thousand rows with three numbers in each. A thousand polynomials there meant a million numbers, and a solve to match.</p>
+<p>He catches himself enjoying something else, too. Give every element the same <span class="math inline">\(k\)</span> and the same width, and every interior row reads <span class="math inline">\(k/h\)</span> times <span class="math inline">\((-1,\ 2,\ -1)\)</span>: the finite-difference matrix from five weeks into that semester, arrived at from a completely different idea.</p>
+<p>The face temperatures are fixed, so the coefficients on <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_3\)</span> aren’t unknowns: they’re 1100 K and 300 K. Every term that carries one of them is known, so it moves to the right-hand side, where it acts like an extra heat source pushing on the unknown temperatures. For the first unknown, at the glue’s hot face, the row reads <span class="math display">\[a(b_1, b_1)\,u_1 + a(b_2, b_1)\,u_2 \;=\; (f, b_1) - a(b_0, b_1)\,T_{\text{hot}}.\]</span> What stays on the left is the matrix for the two unknowns. He looks at its first row: 0.792 and -0.750. It doesn’t sum to zero.</p>
+<p>Of course it doesn’t. The full row did, because <span class="math inline">\(b_0\)</span> was in it. But <span class="math inline">\(b_0\)</span> isn’t in the space: the hot face’s temperature is fixed, so its term went to the right-hand side, and with it the -0.042 that balanced the row. And a constant can’t be in <span class="math inline">\(\mathcal{V}_n\)</span> anyway, because it doesn’t vanish at the faces. The space is the part that’s zero at both faces; the face temperatures ride along on <span class="math inline">\(b_0\)</span> and <span class="math inline">\(b_3\)</span>, outside it.</p>
+<p>Four years, and it’s one line.</p>
+<p>The right-hand side is the last piece. <span class="math inline">\((f, b_k)\)</span> is the heating weighed by tent <span class="math inline">\(k\)</span>: how much of the heat deposited in the stack lands near node <span class="math inline">\(k\)</span>. He works it out element by element, the same way as the matrix, and runs Tent on the tile heating problem.</p>
+<div class="notebook">
+<div id="ccf1ce77" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> quad</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> falkenrath <span class="im">import</span> exact</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> np.zeros(n <span class="op">+</span> <span class="dv">1</span>)   <span class="co"># (heating, b_k), element by element</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> e <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    a, b <span class="op">=</span> nodes[e], nodes[e <span class="op">+</span> <span class="dv">1</span>]<span class="op">;</span> h <span class="op">=</span> b <span class="op">-</span> a</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    left <span class="op">=</span> <span class="kw">lambda</span> s: stack.heating(s) <span class="op">*</span> (b <span class="op">-</span> s) <span class="op">/</span> h</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    right <span class="op">=</span> <span class="kw">lambda</span> s: stack.heating(s) <span class="op">*</span> (s <span class="op">-</span> a) <span class="op">/</span> h</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    f[e] <span class="op">+=</span> quad(left, a, b)[<span class="dv">0</span>]</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    f[e <span class="op">+</span> <span class="dv">1</span>] <span class="op">+=</span> quad(right, a, b)[<span class="dv">0</span>]</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> np.zeros(n <span class="op">+</span> <span class="dv">1</span>)<span class="op">;</span> T[<span class="dv">0</span>], T[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> stack.T_hot, stack.T_cold</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>inner <span class="op">=</span> <span class="bu">slice</span>(<span class="dv">1</span>, n)   <span class="co"># the unknowns: interior nodes</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>rhs <span class="op">=</span> f[inner] <span class="op">-</span> A[inner, <span class="dv">0</span>] <span class="op">*</span> T[<span class="dv">0</span>] <span class="op">-</span> A[inner, <span class="op">-</span><span class="dv">1</span>] <span class="op">*</span> T[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>T[inner] <span class="op">=</span> np.linalg.solve(A[inner, inner], rhs)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>Te <span class="op">=</span> exact(stack)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x_, T_ <span class="kw">in</span> <span class="bu">zip</span>(nodes, T):</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    err <span class="op">=</span> <span class="bu">abs</span>(T_ <span class="op">-</span> Te.at(x_))</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>x_<span class="sc">:5.1f}</span><span class="ss"> mm   </span><span class="sc">{</span>T_<span class="sc">:8.3f}</span><span class="ss"> K   error </span><span class="sc">{</span>err<span class="sc">:.0e}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  0.0 mm   1100.000 K   error 0e+00
+ 24.0 mm    446.472 K   error 1e-13
+ 24.4 mm    402.879 K   error 0e+00
+ 40.0 mm    300.000 K   error 0e+00</code></pre>
+</div>
+</div>
+</div>
+<p>Perfect: the same zeros at the nodes as last week. But last week they came out of a solver nobody else had seen. These came out of twenty lines she can read top to bottom.</p>
+<hr>
+<p>The notebook is good. Really good, even. But it isn’t complete.</p>
+<p><em>I don’t know why that’s true.</em> That’s what Joyce said, calmly, easily. <em>Why is it?</em></p>
+<p>He can’t just show her that Tent is exact. He has to show her why it has to be. Anything less is dressing up what she’s already seen.</p>
+<p>His fingers hover over the keyboard. Really, why is it true? Numerical answers are almost never exact. He has to give Joyce that.</p>
+<p>He scrolls back to the plot from the night he sent the email:</p>
+<div class="notebook">
+<div id="b2aa2c11" class="cell" data-execution_count="20">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-better-than-good_files/figure-html/cell-21-output-1.png" width="878" height="469" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>Three straight segments laid across a curve that is plainly not straight, and every node sitting dead on it. He’s seen it so many times that he stopped seeing it. He makes himself see it again.</p>
+<p>It shouldn’t work. Straight lines through a curve should miss it everywhere, a little, the way a chord misses an arc. These miss it everywhere except at the nodes, where they miss it by nothing. Not small. Nothing.</p>
+<p>He pulls a pad of paper over and draws the temperature. Then the tents under it. Then he crumples it. Then the slopes, which is closer, and crumples that too. For twenty minutes he forgets what the notebook is for. He isn’t building anything. He’s just turning the thing over to see what’s on the other side, and it’s the best twenty minutes he’s had in a week.</p>
+<p>Then 4C comes back. His response to Joyce: <em>“It fits slopes. It’s obvious if you draw it.”</em></p>
+<p>Three crumpled sheets beside his laptop say it wasn’t obvious. He’d known the answer was a picture. He hadn’t had the picture.</p>
+<p><em>Obvious.</em> He knows that word from the other side. He has stood at a board with a marker in his hand and heard <em>basic</em>.</p>
+<p>He doesn’t finish that thought.</p>
+<p>What would she do with the <em>why</em>, if he gave it to her? A week ago he had never heard of her. She walked in from nowhere, agreed with him, and asked about the math. That could mean she’s the first person here who’ll actually read the work. But read it how? She was willing to agree with him out loud. More than willing: she <em>started</em> with it. Did she want to believe him? Or would her red ink come too, just slower, once she knew which parts he’d least want to see marked up?</p>
+<p>He writes it for her anyway. Half of it is something like generosity: wanting to believe she might want to see it because it could be right. The other half is bracing, for having to defend why it isn’t wrong.</p>
+<div class="notebook">
+<div id="989a34bd" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, stack.thickness, <span class="dv">4001</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>slope <span class="op">=</span> np.gradient(Te.temperature(x), x)  <span class="co"># true slope, K/mm</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> np.diff(T) <span class="op">/</span> np.diff(nodes)  <span class="co"># Tent: slope per element</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>fig, (a1, a2, a3) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="fl">2.8</span>))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>a1.plot(x, slope)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>a1.set_title(<span class="st">"true slope: jumps at interfaces"</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>a2.plot(x, slope, alpha<span class="op">=</span><span class="fl">0.35</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> e <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    a2.plot(nodes[e:e<span class="op">+</span><span class="dv">2</span>], [bars[e]] <span class="op">*</span> <span class="dv">2</span>, lw<span class="op">=</span><span class="dv">3</span>, color<span class="op">=</span><span class="st">"C1"</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>a2.set_title(<span class="st">"Tent: the average slope, per element"</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>a3.plot(x, Te.temperature(x))</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>a3.plot(nodes, T, <span class="st">"o-"</span>, color<span class="op">=</span><span class="st">"C1"</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>a3.set_title(<span class="st">"rise matches rise: nodes land"</span>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> a <span class="kw">in</span> (a1, a2, a3):</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    a.set_xlabel(<span class="st">"depth (mm)"</span>)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-better-than-good_files/figure-html/cell-22-output-1.png" width="1584" height="429" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="notebook">
+<p><strong>7. Why the nodes are exact</strong></p>
+<p>Galerkin makes the residual orthogonal to every tent. In the weak form Tent actually solves, after integrating by parts, that says <span class="math display">\[\int k\,(u - u_a)'\,b_k'\,dx = 0 \quad\text{for every } k.\]</span> Now look at what’s in that integral. A tent’s slope is a constant on each of its two elements. So on each element, the integral is just a constant times the slope of the error, added up across the element, and adding up a slope across an element gives the <strong>rise</strong> across it. <strong>Orthogonality to a tent only ever sees how much the error rises across each element. It’s blind to what the error does in between.</strong></p>
+<p>Tent’s lines can’t follow the curve between the nodes, and they don’t have to. What a line <em>can</em> do is rise across its element by exactly what the true temperature rises there. Do that on every element, and the error rises by zero across each one, so every orthogonality condition holds. Galerkin has exactly one answer, so that’s the answer. Start at the hot face, where the temperature is fixed, and add up the rises: <strong>every node lands on the curve.</strong></p>
+</div>
+<p>He reads it back, and it’s right, and it’s clean, and he doesn’t know which reader he’s written it for. The one who’d circle it. Or the one who’d say <em>I don’t know why that’s true</em>, out loud, like it cost her nothing. No: like it gave her something. Something to enjoy holding, and figuring out.</p>
+<hr>
+<p>He stretches his fingers, straightens his back, and checks the time. 3:10. His eyelids are heavy, and for a moment his bed sounds like a very good idea. He scans the cells he’s written so far. The method. The mesh. The space. The tents. The basis, written out. The element. The matrix. The solve. The slopes. They’re airtight. It’s the best report he’s written this year.</p>
+<p>Then, Joyce’s voice comes back into his head. Polite but not polite enough to just let him rest.</p>
+<p><em>Then how,</em> she’d said slowly, <em>is the temperature converging?</em></p>
+<p>The itch from when she first asked it comes back. A riddle is a riddle. Mara’s code gets the slopes wrong at every interface, at every polynomial degree, forever. The temperature is built out of those slopes. And yet the temperature converges. Something is being forgiven, and he wants to know what. And Joyce wants to know what.</p>
+<p>He opens a new cell and types it in before he can talk himself out of it: <em>Why does the temperature converge for Mara’s code when the flux never does?</em></p>
+<p>That means Mara’s code, not Tent. He reopens it. Not on the thin stack: there the polynomial is still blind to the glue, and the blindness would sit on top of whatever he’s looking for. On the thick legacy stack the glue is four millimeters wide, wide enough to see from the start, so whatever’s left at the interface is the ringing and nothing else.</p>
+<div class="notebook">
+<div id="35ea74d7" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> trapezoid</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> falkenrath <span class="im">import</span> mara, KESTREL_A <span class="im">as</span> thick</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>xi <span class="op">=</span> thick.interfaces[<span class="op">-</span><span class="dv">1</span>]                 <span class="co"># glue -&gt; structure</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(xi <span class="op">-</span> <span class="dv">2</span>, xi <span class="op">+</span> <span class="dv">2</span>, <span class="dv">20001</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> exact(thick).flux(x)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> deg <span class="kw">in</span> (<span class="dv">64</span>, <span class="dv">128</span>, <span class="dv">256</span>, <span class="dv">512</span>):</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    err <span class="op">=</span> mara.solve(thick, degree<span class="op">=</span>deg).flux(x) <span class="op">-</span> q</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    peak, l2 <span class="op">=</span> <span class="bu">abs</span>(err).<span class="bu">max</span>(), trapezoid(err<span class="op">**</span><span class="dv">2</span>, x)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"degree </span><span class="sc">{</span>deg<span class="sc">:3d}</span><span class="ss">:  peak error </span><span class="sc">{</span>peak<span class="sc">:.2f}</span><span class="ss">"</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f"   integral of error^2 </span><span class="sc">{</span>l2<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>degree  64:  peak error 3.80   integral of error^2 1.855
+degree 128:  peak error 3.68   integral of error^2 0.902
+degree 256:  peak error 3.63   integral of error^2 0.454
+degree 512:  peak error 3.67   integral of error^2 0.239</code></pre>
+</div>
+</div>
+</div>
+<p>There it is. The peak barely moves: 3.8, 3.7, 3.6, 3.7. Double the polynomial degree as many times as you like and the spike at the interface stays just as tall. But it gets narrower, so the integral of its square halves every time the degree doubles. The error in the slope goes to zero <em>on average</em>, even though at the interface it never goes to zero at all.</p>
+<p>So that’s what’s being forgiven: a spike that never shrinks, in a region that keeps getting thinner. And the temperature is the slope added up, so it inherits the small integral and not the tall spike.</p>
+<p>It’s half an answer. He can see <em>that</em> it happens. He can’t see why the method is <em>entitled</em> to it: why a Galerkin solution would accept a permanent spike in exchange for a small integral, why that’s the trade it makes and not some other. He tries for an hour. He gets close enough to feel the shape of it, the way he felt the shape of the first row at the board, and no closer.</p>
+<p>At 4:30 he reads the cell back as carefully as he can, as Joyce will read it. A question, a table, and a paragraph that stops in the middle of an idea. It isn’t perfect. But it’s more than he knew before. Surely it’s more than Joyce knew when she asked. It would give her something new to work from.</p>
+<p>Is that enough? It’s so late it’s early now, and his mind drifts to a hotel ballroom, and to standing in front of an easel for hours.</p>
+<div class="flashback">
+<p><span class="when">Senior year, April</span></p>
+<p>The undergraduate research symposium was in the ballroom of the Halston Marriott, on folding easels in rows, under chandeliers that had seen better weddings. Luis’s poster was mostly pictures. Vortex shedding behind a cylinder, in a water tunnel he’d built from a sixty-gallon fish tank and a pool pump, with food dye for the flow, his phone for a camera, and a script that tracked the vortices frame by frame. The vortices peeled off one side and then the other, in a street as regular as a heartbeat, and at the bottom of the poster sat a Strouhal number that matched the textbook.</p>
+<p>It won.</p>
+<p>He hadn’t let himself expect it, and then it happened, and for a while he didn’t know what to do with his hands. Professors he’d never had came by to shake one of them. The department chair said <em>remarkable</em>. Somebody took a photo.</p>
+<p>And under all of it, a thing he’d never said to anyone: <em>so I could have.</em> The other school, the one that had said yes. He’d never known whether he’d have made it there, and there was no way to find out; you don’t get to run that experiment. He’d worked weekends in the van and nights on this, with a fish tank and a pool pump. This was as high as he could have gone with what he had. And it was the top. Maybe he’d belonged there after all. Maybe Halston had just been a detour the world made him take, and now it was over.</p>
+<p>Pruitt came last. He stood at the poster longer than anyone had, reading all of it, the way he read a board. Luis waited.</p>
+<p>Pruitt put one finger on the bottom corner. “Your Strouhal number has three significant figures and no error bar.”</p>
+<p>Then, quietly, so that only Luis heard it: “They’ll see where you’re from and assume you’re not good enough. So be better than good.”</p>
+<p>And he walked away, toward the coffee.</p>
+<p>Luis stood next to his poster with the ribbon still on it. The pictures were the same pictures. The number at the bottom had three significant figures and no error bar, and now it was the only thing on the poster he could see. <em>Where you’re from.</em> He’d been from somewhere else for about ten minutes. Now he was from Halston again, and Pruitt had just told him he always would be.</p>
+</div>
+<p>He didn’t hear it as kindness then. It took the poster away from him.</p>
+<p>At his kitchen table, he half-hears it as kindness now. That’s worse.</p>
+<p><em>Better than good.</em> No holes. He looks back at the last cell. The non-answer about why Mara’s code converges in temperature but never in flux. He still doesn’t know which reader Joyce is. If she’s the kind one, the half-answer costs him nothing. If she isn’t, it costs him the one person in the building who asked how anything works.</p>
+<p>He selects the cell, the question and the table and the paragraph that stops, and deletes it.</p>
+<p>At 5:04 he attaches the notebook to an email with no message in it and sends it to Joyce. Everything he’s run. Everything except the one messy thing he still can’t tidy up. Nobody asks for the messy stuff and means it.</p>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/01-maras-code.html" class="pagination-link" aria-label="Mara's code">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Mara’s code</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/03-the-messy-ones.html" class="pagination-link" aria-label="The messy ones">
+        <span class="nav-page-text"><span class="chapter-title">The messy ones</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

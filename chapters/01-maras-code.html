@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Mara’s code – Between the Nodes</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/02-better-than-good.html" rel="next">
+<link href="../chapters/00-cold-open.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-25855274aaae0edcb6a88ca50476d85d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-52d5803e6c8ddc1c5663ec64fb66b748.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-25855274aaae0edcb6a88ca50476d85d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-fba32274148bb83c47e8d216b746dbdb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-1ad248c0c725b239c2152f44bab456a3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-fba32274148bb83c47e8d216b746dbdb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/01-maras-code.html"><span class="chapter-title">Mara’s code</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Between the Nodes</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About this book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-cold-open.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2:14 a.m.</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-maras-code.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Mara’s code</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-better-than-good.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Better than good</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-the-messy-ones.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">The messy ones</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-show-them.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Show them</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Mara’s code</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The workbench had arrived on a Tuesday, in a box the size of a canoe, and Joyce had spent Wednesday assembling it with the confidence of a woman who knew what to do with a good set of instructions.</p>
+<p>That was either why she had been a good engineer or why she hadn’t been a great one. Somewhere around the third Allen key she had decided not to settle which.</p>
+<p>The bench stood where Sam’s bed used to be. The rest of the room was still mostly Sam: a corkboard of concert wristbands, a shelf of paperbacks with cracked spines, a box marked SAM — KEEP?? in Sam’s own handwriting, the question marks underlined, as if past Sam had foreseen exactly this morning and wanted no part of it. The plan was simple. Clear the room. Set up the bench. Build the guitar. Joyce had written the plan on an index card and put the card in a plastic sleeve, which was not the same as laminating it, she’d told Brandon. Brandon had laughed at her anyway, in the way only he could, which left her feeling appreciated rather than made fun of.</p>
+<p>The guitar was in the corner, in a long, flat box labelled DREADNOUGHT KIT — SPRUCE / MAHOGANY — ADVANCED. She had chosen Advanced over Intermediate on the grounds that she had run a numerics group for twenty-two years and could surely manage some glue. The box was still sealed. That was correct. You don’t open the kit until the bench is ready, and the bench isn’t ready until the room is clear, and the room isn’t clear until someone decides about SAM — KEEP??</p>
+<p>Her phone buzzed on the windowsill. <em>Sam.</em> She smiled at it, and thought, <em>I’ll call back when I’ve finished this box</em>, which she felt was a perfectly reasonable thing to think. She turned the phone face down, gently, the way you’d put down something you meant to come back to.</p>
+<p>The doorbell rang at ten.</p>
+<p>“You look retired,” Brandon said.</p>
+<p>“I’m building a guitar.”</p>
+<p>“Can you play?”</p>
+<p>“That’s phase two.” She stepped back to let him in. “Come see my bench. It’s my opus. Forty years in numerics, and I’m only now realizing I was wasted there. I’m built for hands-on work.”</p>
+<p>He chuckled in a way that made Joyce think he didn’t believe her. But he still admired the bench, which was kind of him, and the guitar kit, which was kinder. Then he stood in the doorway of the room with his hands in his jacket pockets, the way he used to stand in the doorway of her office when he had bad news and wanted credit for delivering it in person.</p>
+<p>“It’s about Mara’s code,” he said.</p>
+<p>Joyce took a second with that.</p>
+<p>Mara had written that solver in her second year at Falkenrath, in a single spring, and it had outlived three programs, two reorganizations, and Mara’s own time at the company by a decade. Mara had been the best engineer Joyce ever worked with, and the one Joyce had lost. Not with a door slammed, but with a slow, polite drift that ended in a resignation letter and a card that said <em>thank you for everything</em> and meant it, which had somehow been worse.</p>
+<p>Joyce kept a private list of the people she’d been lucky enough to watch get good. No: she was owning her accomplishments now. The people who had gotten really, gosh-darn good, and wouldn’t have without her. She felt a smile in her chest when she let herself admit the list was long. The other list, the ones she had tried and failed to help become great, was short. But it was the one she remembered best. That was just the arithmetic of a career, and she had mostly made her peace with it.</p>
+<p>“Is it broken?” she said.</p>
+<p>“That’s the question.” Brandon sat on the edge of the bench, which held him, as she had known it would. “You’ve heard about Kestrel.”</p>
+<p>“Only that it exists, and that it’s been eating the budget since before I left.”</p>
+<p>“It’s eating everyone’s budget. Reusable hypersonic vehicles. Not one flight and into the ocean: the same airframe, flying again and again, which means the heat shield has to come home in one piece every time and fly again.” He held up his hands a few inches apart. Joyce couldn’t tell whether he was showing her some feature of the heat shield or the margin for error. “Same idea as always: ceramic tile on the outside, bonded to the structure underneath. But every gram you carry on every flight is a gram you can’t spend on fuel or payload, so they’ve been shaving the thickness of every layer in the stack. Including the adhesive.” He stopped to blow out a breath, as if he’d been holding it too long. She had missed this about him. It was what made him a good boss: he could see how the whole picture had to come together for the next engineering marvel. More than see it; he couldn’t contain his excitement about it, and it was contagious. “On the new Kestrel stacks it’s under half a millimeter.”</p>
+<p>She raised an eyebrow. “That’s thin. The old ones were…”</p>
+<p>“Almost ten times that, in case you’ve forgotten since becoming a rock-star guitarist.” He seemed to realize he’d cut her off, and smiled an apology.</p>
+<p>She didn’t mind. This was how the back-and-forth worked with them, and she liked it. “And I assume the adhesive still has to stay under its temperature limit, on the side against the hot tile.”</p>
+<p>He nodded. “That’s the number the heat-shield design team builds its margins on. Peak adhesive temperature, straight from Mara’s code.” He rubbed his eyes. “Last week one of my people emailed the entire numerics list at two in the morning. The subject line was ‘Mara’s code can’t see the glue.’”</p>
+<p>Joyce gave a warm half snort. “It’s punchy, that’s for sure.”</p>
+<p>Brandon pointed a finger at her. “It’s terrible. Half the list thought it was spam. The other half wrote back to ask what glue.”</p>
+<p>Joyce felt as if they were kids again, brother and sister, and he was mad because she’d laughed at him when their mom made him do an extra round of dishes. Not mad, really. It was a game they played. She would poke him in just the right places, and he enjoyed it so much he had to put on a persona, Mad Brandon, to react to her jabs. It was a strange way to show someone you liked talking to them. Stranger, maybe, that Joyce saw exactly what he was doing, liked it, and wanted to provoke it.</p>
+<p>She let herself admit that she missed this. The fun problems, and the deeply flawed people who worked on them. It was the human side that had always pulled at her most. Any of these problems was solvable. Put the right person in the room (heck, the right LLM) and the answer falls out. But you don’t get any person in the room; you get the team you’ve got. And the most amazing part was that what stood between a team and the answer was almost never whether they were technically able. It was something someone had said to someone else three weeks ago, or baggage from a past marriage, or something they weren’t even aware of. Getting them to see it, and then move past it: that was the secret.</p>
+<p>Brandon was watching her, waiting to see whether she’d take the bait. Maybe he had missed this too. He probably didn’t have many people who could both listen to him and prod him when he needed it. Or either one, really. He was plenty likeable, but likeable came with being the boss, and most people probably didn’t see how he hid behind the energy and the likeability. Coming up at the same time, with her a few years ahead, had helped Joyce see it. She had always been the older sister. When he was younger his enthusiasm had been rawer. He’d always had a knack for unsticking a stalled project by getting the right people talking to each other, or for getting one green-lit by upper management with an elevator pitch and a few beers at Lucky’s. But he’d also wanted to go all in on half-baked ideas that were exciting and had nothing underneath them yet. And sometimes his energy came out as a knee-jerk reply to a colleague, one better left until the next day. It had been one of the loveliest parts of Joyce’s career, watching him shave off the unhelpful parts and hone in on what made him who he was. She had never told him that. Maybe someday she would.</p>
+<p>“Who’s the engineer?”</p>
+<p>“Luis Arroyo. Two years in. You’d like him.” Brandon rocked on his heels. “He fixed an emissivity table we’d been using on every program for six years. It came from a supplier, for the tile coating, and he noticed the curve bent the wrong way at high temperature. Units error, right in the supplier’s spreadsheet. It saved a test article. Then he rewrote our mesh generator over a weekend because the old one annoyed him, and the new one’s better, and he didn’t tell anyone until it was done.” He paused. “Best numerical instincts I’ve seen since Mara.”</p>
+<p>Brandon had never been subtle. Joyce watched a cheeky smile spread across his face. Sure, she was a little annoyed that he thought he was pulling her into some scheme he’d concocted. It was more annoying that it was working. But mostly it was fun.</p>
+<p>“And the analysts?”</p>
+<p>“Furious. Mara’s code has twenty years of successful flights behind it, and it passed its convergence check on the thin stack, and some kid with no manners says it’s wrong and his own code is exact, at two in the morning, to forty people.” Brandon spread his hands. “He’s not wrong often. But when he’s right, he’s right <em>at</em> people. Management’s started asking whether he’s a fit.”</p>
+<p>“So you want me to tell you who’s right.”</p>
+<p>“I want you to come in for a few weeks. Consult. Look at what he’s done, look at the code, talk to him.” He nodded at the room. “You’d have afternoons free for the guitar.”</p>
+<p>Joyce looked at the sealed box. “If he’s as good as you say,” she said, “he’ll work it out.”</p>
+<p>“He has worked it out. Maybe.” Brandon took a breath, and when he went on his voice had lost some of its lightness. “Nobody here can tell. And he’s going to get himself fired before anyone finds out.”</p>
+<p>Brandon, she noticed, had saved that part for last. He’d known her for thirty years. He’d known the code wouldn’t be enough to get her into a car, and he’d known what would, and he’d put it at the end, where it would still be in the room after he left.</p>
+<p>She could see the shape of the thing: somebody very good, on the way to making sure nobody ever found out how good. She had seen that shape many times, and she had been good at changing its ending. But she had also retired, partly, because she was tired of the times she hadn’t been. What if Luis became another name on the wrong list? Capable, probably smarter than she was, and red flags all over.</p>
+<p>“I don’t know the details,” Brandon said, already moving toward the door. “I’ll forward you the email. You’ll be able to make better sense of it than anything I can tell you.”</p>
+<p>“I haven’t said yes.”</p>
+<p>Brandon paused and turned back to her.</p>
+<p>“Read the email. Then you can tell me no.” He turned around again, walked out the door, and left.</p>
+<hr>
+<p>The schedule on the refrigerator said <em>6:00 coffee. 6:15–8:00 bench.</em> At 6:15 Joyce was at the bench, with her coffee, and with her laptop, which the schedule did not mention.</p>
+<p>She had read the email once last night, the way she read anything after nine: to decide whether it was a morning problem. It was. She read it again now with her glasses on.</p>
+<p>The subject line was terrible. It made her like Luis more. It was either written by someone completely certain or someone pretending to be. Either way, she was interested, the way some people find fireworks interesting: from a respectful distance, and with an eye on where the sparks were directed.</p>
+<p>She skipped the attached flux plot. She knew what flux plots from that code looked like near an interface. She opened the second attachment, the sweep in polynomial degree, and looked at it for a long time.</p>
+<p>The convergence check had passed. She knew the check; her group had written it. Start at polynomial degree 32, double it, compare the temperature at the glue; if the two answers agree to within a kelvin, the answer has stopped moving, so stop. If not, double again. In forty years, agreement had meant exactly one thing: you’re done, because the answer has arrived. And here was the same code agreeing with itself to a third of a kelvin at polynomial degrees 32 and 64, and going on agreeing with itself at much higher polynomial degree, until it shot off: 24 kelvin higher by polynomial degree 512, over the adhesive’s limit and still climbing.</p>
+<p>She did one thing Luis hadn’t put in the email. She pulled the certification log for the stack A reference case, the old four-millimeter bondline every program before Kestrel had used. The same check, the same code, the same tolerance:</p>
+<div class="printout">
+<div id="bb8c8fbf" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-stdout">
+<pre><code>CERTIFICATION LOG  thermal / legacy stack A
+    degree   32 -&gt;   64   change in T  16.26 K   refine
+    degree   64 -&gt;  128   change in T   8.67 K   refine
+    degree  128 -&gt;  256   change in T   4.34 K   refine
+    degree  256 -&gt;  512   change in T   2.32 K   refine
+    degree  512 -&gt; 1024   change in T   1.13 K   refine
+    degree 1024 -&gt; 2048   change in T   0.56 K   PASS
+  accepted polynomial degree 1024</code></pre>
+</div>
+</div>
+</div>
+<p>On the thick stack, the check had refused to stop. It doubled its way up to polynomial degree 1024, the change in temperature halving each time, the way a converging answer should. On the thin stack it stopped at the first step.</p>
+<p>How do two answers agree with each other and both be wrong?</p>
+<p>She held the question for a while, because it deserved holding.</p>
+<p>She closed her eyes and remembered Mara’s code. She saw Mara at a whiteboard in 2006, in a cardigan with chalk dust on one sleeve, explaining why she’d chosen integrated Legendre polynomials. <em>Because then the slopes are orthogonal</em>, Mara had said, and drawn the matrix for a single wall, nothing but a diagonal, and looked at Joyce as if this were the most obvious and most delightful thing in the world. Layers had cost the diagonal, conductivity inside the integral, every entry filled in, but a dense solve at degree 32 is nothing, and Mara had shrugged that off too.</p>
+<p>So what had gone wrong now? <em>It can’t see the glue.</em> Joyce couldn’t tell whether Luis’s brashness amused or annoyed her. No, that wasn’t helpful. Understanding him was the important thing. Was he trying to piss people off? To impress them? To stun them into not arguing?</p>
+<p>Impossible to say yet. Not enough information. Joyce pulled the notepad toward her. Mara’s functions were smooth, and every one of them spanned the whole stack.</p>
+<p>How narrow a feature can a polynomial of degree 32 draw? Not narrower than the spacing of its own wiggles, which in the middle of the stack is about π/2n of the thickness (a polynomial’s zeros crowd toward the ends and spread out to about that spacing in the middle). She worked it out: 2.0 millimeters. The bondline was 0.4.</p>
+<p>So the basis wasn’t approximating the bondline badly. It couldn’t represent anything that thin at all. The check compared the code with itself at two resolutions, and both were too coarse to see the glue. A paint roller and a slightly smaller paint roller will agree perfectly about a hairline: there isn’t one. Doubling the polynomial degree only tells you the answer has stopped changing. It can’t tell you whether it stopped because it arrived, or because it hasn’t started yet.</p>
+<p>When should it start? When the wiggles got narrower than the glue: polynomial degree 157 or so, by her estimate. She checked it against Luis’s sweep. The temperature lifted off at around polynomial degree one hundred. And on the thick stack the glue had been wide enough to see from the very first step, so there the check had been honest all along.</p>
+<p>Luis was right.</p>
+<p>Joyce put the pen down and found that she was making a list, which she did when something impressed her and she didn’t yet know what to do about it. To see this, he’d had to plot a quantity nobody plots. Then sense that a problem everyone already knew about was hiding a worse one. Then connect it to the physical features of the new stacks. Then, hardest of all, distrust a check that had passed.</p>
+<p>If someone had handed her this question (<em>why does the check stop early on the thin stack?</em>) she’d have had an answer by lunch. She was sure of that the way she was sure of very few things. Hand her a question and she would take it apart, every piece, and know where each one went.</p>
+<p>But nobody had handed Luis a question. He had been asked to add a feature. He’d looked at a plot everyone had been told to ignore, and seen that it was a question, and that the question was the most important one in the building. That was the part she couldn’t do, or had never once done. Maybe those were the same thing. Forty years of answering questions beautifully. She couldn’t think of one she’d been the first to ask.</p>
+<p>Then the last line of the email, alone in its paragraph like a man standing on a chair: <em>Tent is exact at every interface.</em></p>
+<p>Well, no. Nothing was exact. In forty years Joyce had met exactly one exact thing in numerical analysis, a boundary condition, and a fair amount of the time somebody had implemented it wrong. She underlined <em>exact</em> on the notepad, twice, and wrote <em>?</em> next to it, and then, after a moment, <em>how would that even work</em>, and then she sat looking at that for longer than she meant to.</p>
+<p>The clock on the laptop said 8:10. The bench hour was gone. The kit was still sealed.</p>
+<p>She turned to a clean page and wrote <em>Luis —</em> at the top, and under it, the first of her questions.</p>
+<hr>
+<p>Falkenrath-Voss had moved the numerics group up to the fourth floor since she’d left, which Joyce had decided not to take personally. Conference room 4C had a whiteboard someone had cleaned with real conviction and a window onto the parking structure. Luis Arroyo was already there.</p>
+<p>He was younger than she’d pictured, and neater: pressed shirt, laptop open, and squared on the table in front of him, a printout of his own email. Below the email, in pencil, small and even, ran a column of notes. She couldn’t read them upside down, but she recognized the format. Responses to different lines of attack, prepared and ready to deploy.</p>
+<p>He stood, shook her hand, sat. “If this is about the subject line,” he said, “I stand by it.”</p>
+<p>His words came out short and hard. It wasn’t impolite, exactly, but he was ready for a fight. Interesting. Did he want that outcome, or was he worried she was going to start one? “Mr.&nbsp;Arroyo, I think everyone in this building knows you stand by that subject line.” She said it warmly, and smiled as she sat down across from him.</p>
+<p>She turned her notepad around to face him, so he could see the page she’d filled at six that morning. “I read it. You’re right about the glue. The check never got out of the pre-asymptotic regime: thirty-two and sixty-four are both too coarse to see a layer that thin, so they agree with each other about the wrong answer.”</p>
+<p>“Okay,” Luis said.</p>
+<p>His eyes went to the printout and down the pencil column, item by item, the way you’d look through a toolbox for the right size wrench. There wasn’t one. He’d prepared for every objection but agreement. So he was better at being argued with than agreed with. Or more used to it? Either way, she didn’t know yet whether that was something to worry about or something to use. Probably both. Most things were.</p>
+<p>“But Mara’s code isn’t wrong,” she said. “It’s blind at this degree. Raise the polynomial degree and it sees.”</p>
+<p>“Raise it to what?” That came fast; that one was on the list. “The check can’t tell you. You’d need hundreds, and it’s a dense solve every time. And the flux never converges. Not at any degree.”</p>
+<p>“I know about the flux.”</p>
+<p>“Then you know the code can’t get the physics right at an interface. Ever.”</p>
+<p>Joyce started to say that nobody signed off on flux, and stopped, because that was what the analysts had told him, and it wasn’t an answer. It was a procedure.</p>
+<p>She looked at his screen instead: the flux near the glue, jagged and overshooting, wrong in a way that a higher polynomial degree would narrow but never cure, and beside it the temperature, the number everyone signed off on, smooth and, given enough degree, converging. She had known both of those facts for twenty years. She had never once set them side by side.</p>
+<p>The temperature is built from the slope. Integrate the slope and you have the temperature; that’s all a temperature profile is. So if the slopes never settle near the interfaces, if the code gets them wrong at every degree, forever, what exactly is the temperature converging <em>to</em>? And why should it converge at all? Build a wall out of bad bricks and it shouldn’t be able to stand upright.</p>
+<p>“Then how,” she said slowly, “is the temperature converging?”</p>
+<p>Neither of them answered. Luis had stopped looking at his printout. He pulled the laptop back toward himself, opened the flux plot, zoomed in on the glue, zoomed again, typed something, frowned at it. It was the absorbed, slightly impolite focus of someone who has briefly forgotten there’s anyone else in the room. Joyce knew that kind of attention. She’d spent a career trying to point it at the right problems.</p>
+<p>For the first time since she’d walked in, they were looking at the same thing. She noted that, near the top of the page: whatever else he was, he couldn’t leave a good question alone. If there was a door, that was it.</p>
+<p>Why did the temperature converge when the flux didn’t? It was the right question, but they weren’t going to solve it this morning. Move him to the next topic. Why was he so set on not fixing Mara’s code? Did he need to do things his own way? Did he want credit for building something new? Or did he really just think he’d found something better? “If raising the degree rescues the temperature,” she said, “why do we need Tent?”</p>
+<p>He looked up. “Because you’d need hundreds of degrees and a dense matrix to see a layer you could just put a node on.” He was quicker now; that one was on the list too. “Tent puts a node at every interface. The resolution follows the stack, not the polynomial. The glue is one element, however thin it is. The matrix is tridiagonal. And the adhesive’s hot face is a node, so the number you sign off on is exact.”</p>
+<p>All right. All defensible. But was that the motive? “So the resolution follows the geometry instead of the basis.”</p>
+<p>“That’s what I said.”</p>
+<p>It was, more or less. She’d restated it anyway, out of forty years’ habit, the way you might straighten a picture in someone else’s house. Mara used to hate that too. She let herself observe the thought come and go, then brought her attention back to Luis.</p>
+<p>“Exact is a big word,” she said.</p>
+<p>He turned the laptop around. One element per layer: three straight segments laid across the temperature profile, the true curve bowing above them through the tile. Below the plot, the errors at the four nodes. Zeros. Not small numbers. Zeros. This figure hadn’t been in the email. Had he had it the whole time? Why hadn’t he sent it? Was he afraid it would upset people? Did he want to upset them, by making the claim and holding back the proof? Or maybe he’d only made it this morning.</p>
+<p>She had underlined <em>exact</em> twice that morning and written <em>how would that even work</em>. Now she looked at the zeros for a long moment and did the honest thing, which was to stop doubting them. The straight segments missed the curve everywhere except at the nodes, and at the nodes they missed it by nothing at all.</p>
+<p>“I don’t know why that’s true,” she said.</p>
+<p>That got a look, quick and surprised. Or was it anger? No, she didn’t think so. Did he just not expect anyone to care about the technical meat of his work?</p>
+<p>“Why is it?”</p>
+<p>“It fits slopes.” He shrugged. “It’s obvious if you draw it.” He didn’t draw it. He had gone back to his laptop, presumably to the question of why the temperature converged.</p>
+<p><em>Obvious</em>, Joyce thought, was either a step he’d skipped or a door he was keeping shut, and she didn’t know him well enough yet to tell which. It was the second time that morning he’d used a word to close a subject. She noted that too.</p>
+<p>What she did know was how the next six months went if nothing changed. The analysts would keep answering his tone instead of his plots, and he would keep answering their tone instead of their questions, and one day somebody senior would decide the plots weren’t worth the tone.</p>
+<p>She tried something. Not a lesson; she had never once seen a lesson land on anybody. Just a true sentence, set down where he could pick it up or leave it.</p>
+<p>“Right now,” she said, “you’re the only person in this building who can check you. That’s a lonely place to be right.”</p>
+<p>He didn’t answer. His face did nothing in particular. He might have heard it, or filed it under things retired managers say. She’d find out, or she wouldn’t, and either way it would tell her something.</p>
+<p>“Send me everything you’ve run,” she said. “Notebooks, scratch work, dead ends. The messy ones too.”</p>
+<p>“The messy ones aren’t—”</p>
+<p>“Especially the messy ones.” She capped her pen. “I want to see how you got here, not just where you landed.”</p>
+<p>That got the nearest thing to a smile she’d seen all morning.</p>
+<hr>
+<p>After he’d gone, Joyce stayed in 4C with the parking structure and the clean whiteboard and took stock, the way she used to after a first meeting, back when first meetings were her job.</p>
+<p>Column one, what he could do. The diagnosis, which she’d already been over at six a.m. Tent, the natural next move, made before anyone asked. Pictures, with real mathematics behind them. And at two in the morning he had written the most important email the thermal group had received in a decade, and made it almost impossible to read.</p>
+<p>Column two, how he was making sure nobody noticed. Rebuttals in pencil. Answers to questions she hadn’t asked. <em>Obvious</em>, twice. Closing subjects with definitive words that explained nothing. More ready for an argument than for agreement.</p>
+<p>Column three, which she always kept smaller than she wanted to: <em>guesses</em>. Under it she wrote <em>More responsive to interest?</em> That would hardly be surprising. Everyone wants people to care about what they have to say and what they’ve built. Still, it felt like the closest she had gotten to him, underneath the prickly exterior he used to keep people away. She drew an arrow from it and added <em>Work dismissed because of tone?</em> Neither explained how absorbed he’d gotten when she asked why the temperature converged. She moved her pen a few lines down and added one more: <em>Genuine interest in the math.</em></p>
+<div class="notepad">
+<div class="cols">
+<div>
+<p><strong>what he can do</strong></p>
+<p>the diagnosis (right)</p>
+<p>Tent, before anyone asked</p>
+<p>pictures, real math behind them</p>
+<p>the 2 a.m. email: most important in a decade</p>
+</div>
+<div>
+<p><strong>how he hides it</strong></p>
+<p>rebuttals in pencil</p>
+<p>answers to questions I didn’t ask</p>
+<p><em>obvious</em> (×2)</p>
+<p>closes subjects instead of explaining</p>
+<p>ready for an argument, not agreement</p>
+</div>
+<div>
+<p><strong>guesses</strong></p>
+<p>More responsive to interest?</p>
+<p>↳ Work dismissed because of tone?</p>
+<p>&nbsp;</p>
+<p>Genuine interest in the math</p>
+</div>
+</div>
+</div>
+<p>She nodded at the list, then gave herself a quick shake of the head. Probably completely off base. She underlined <em>guesses</em>, faintly, and closed the notepad, as if someone might see them and be disappointed in how wrong she’d gotten him.</p>
+<p>Mara would have liked him, she thought, and then, more carefully: Mara would have recognized him. The certainty was different. Mara’s had been quiet, something she hid behind; his was loud, something he swung. But Mara would have listened to what he had to say; that much was certain. Would she have understood his one-liners, the ones that walled him off? They were almost opposites there. Mara fell so deeply into an algorithm that her reports ran five times longer than they needed to, with more detail than anyone wanted, let alone asked for. That hadn’t worked either. No.&nbsp;Joyce didn’t want to think about that.</p>
+<p>Joyce blinked a few times and felt the pressure of her fingertips against the pen. Index finger, thumb, middle finger. She noticed which part of each one pressed against it. Then she let her mind go where it had been trying to go for an hour: four dots, dead on a curve that wasn’t straight. <em>It fits slopes.</em> On a clean page she drew a curve, and a straight line underneath it, and sat turning the pen over in her fingers.</p>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/00-cold-open.html" class="pagination-link" aria-label="2:14 a.m.">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">2:14 a.m.</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/02-better-than-good.html" class="pagination-link" aria-label="Better than good">
+        <span class="nav-page-text"><span class="chapter-title">Better than good</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

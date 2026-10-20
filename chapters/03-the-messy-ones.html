@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>The messy ones – Between the Nodes</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/04-show-them.html" rel="next">
+<link href="../chapters/02-better-than-good.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-25855274aaae0edcb6a88ca50476d85d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-52d5803e6c8ddc1c5663ec64fb66b748.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-25855274aaae0edcb6a88ca50476d85d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-fba32274148bb83c47e8d216b746dbdb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-1ad248c0c725b239c2152f44bab456a3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-fba32274148bb83c47e8d216b746dbdb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/03-the-messy-ones.html"><span class="chapter-title">The messy ones</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Between the Nodes</a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About this book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/00-cold-open.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">2:14 a.m.</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-maras-code.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mara’s code</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-better-than-good.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Better than good</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-the-messy-ones.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">The messy ones</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-show-them.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Show them</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">The messy ones</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The notebook arrived at 5:04 in the morning, and Joyce, who was up at 5:30 regardless, found it waiting for her like a cat at the door.</p>
+<p>By 6:40 she had read it twice: once fast, the way you read anything the first time, to find out what kind of thing it is; and once slowly, on paper, at the bench, with the notepad and a pencil. She had printed all fourteen pages for the second read; she liked paper. The bench had not been used for its intended purpose in nine days. The guitar building kit sat in its corner, still sealed, being patient in a way she found faintly accusatory.</p>
+<p>She went through the notebook again in her head, the way she used to walk a design review: not what each part said, but what each part was for. The method, set up as a single change to Mara’s, so that it met Joyce exactly where she was coming from. The mesh, with a node at every material edge and the glue as an element of its own. The subspace, and why it had to be built from pieces of straight lines for this problem. The tents, formulas first and then the picture. Their role as a basis, proved. The matrix entries, worked out one element at a time. The assembly, adding up every element’s contribution. The solve, coded clearly and shown to match the exact answer at every node, as he’d already shown her in room 4C. And a lovely visual explanation, backed by written reasoning, for why the answer is exact at the nodes.</p>
+<p>Clean, complete, in the right order. She’d had senior engineers who couldn’t do that with a month and a template. She admired it, and found, a little to her surprise, that the admiration didn’t sting. She loved having a question answered clearly, completely, understandably. And this time, she was the one who had asked the question. Come to think of it, she had done that a great deal over the years: asked the question that got someone to the right answer. She let herself enjoy that for a moment.</p>
+<p>Then she moved her attention past the mathematics.</p>
+<p>She had three pieces of evidence on Luis Arroyo now, and they didn’t agree. The email: either built to inflame or a very poor attempt at being understood, and nearly impossible to read either way. The meeting in room 4C: obviously competent, and dismissive, and incomplete; <em>obvious</em>, twice, where an explanation should have been. And now this: twenty-odd cells, an authoritative and complete treatment of the subject. Could the same person have written that subject line and this? Well, yes; one person had. Which meant the email hadn’t been incapacity. Then what was it?</p>
+<p>And the timestamp. She had asked for what he had, and she had meant it. Nobody had asked him to do this overnight. He had done it overnight anyway, and done it like this.</p>
+<p>She wrote <em>5:04</em> on the notepad and drew a box around it, which was what she did with numbers she didn’t know what to do with.</p>
+<p>Then she went through it the slow way, cell by cell, and the first thing that snagged was cell 5.</p>
+<p>The basis proof. Correct, complete, and written out in symbols, a little stiffly, like something translated from another language. Everywhere else in the notebook, pictures did the arguing: the mesh drawn to scale, the lopsided tents on the real stack, the slopes laid over each other. He thought in pictures; she’d watched him do it in 4C, reaching for the laptop instead of a sentence. And here, at the one place in the notebook where something had to be <em>proved</em>, there was no picture at all. A picture would have been a proof here, and the best kind. She knew exactly what he would have drawn. Why hadn’t he drawn it?</p>
+<p>She didn’t guess. Not yet. She wrote <em>cell 5: no picture?</em> and went on.</p>
+<p>Cell 7 she read three times. <em>Why the nodes are exact.</em> It was good. Orthogonality to a tent only sees how much the error rises across each element, because a tent’s slope is a constant there; a straight line can match a rise exactly; so every node lands. She felt the click of it. And under the click, something small that didn’t quite sit right. <em>On each element, the integral is just a constant times the slope of the error.</em> In the margin of the printout she wrote <em>a constant: which constants?</em> and made herself leave it there. She had an open question of her own, older than this one, and it had seniority.</p>
+<p>It was only when she reached the end that she noticed what wasn’t there.</p>
+<p><em>Notebooks, scratch work, dead ends. The messy ones too.</em> She had said it in 4C, and again in writing. There were no messy ones. No dead ends, no scratch, no cell that started an idea and gave up on it. Every cell was finished. Not just thorough, not just well explained: polished. And, now that she looked for it, limited to the things he could be certain of. That pulled at her as much as anything in the notebook itself.</p>
+<p>She turned back in the notepad to the page from 4C.</p>
+<div class="notepad">
+<div class="cols">
+<div>
+<p><strong>what he can do</strong></p>
+<p>the diagnosis (right)</p>
+<p>Tent, before anyone asked</p>
+<p>pictures, real math behind them</p>
+<p>the 2 a.m. email: most important in a decade</p>
+</div>
+<div>
+<p><strong>how he hides it</strong></p>
+<p>rebuttals in pencil</p>
+<p>answers to questions I didn’t ask</p>
+<p><em>obvious</em> (×2)</p>
+<p>closes subjects instead of explaining</p>
+<p>ready for an argument, not agreement</p>
+</div>
+<div>
+<p><strong>guesses</strong></p>
+<p>More responsive to interest?</p>
+<p>↳ Work dismissed because of tone?</p>
+<p>&nbsp;</p>
+<p>Genuine interest in the math</p>
+</div>
+</div>
+</div>
+<p>The narrow column on the right was the one she wanted. She went down it the way she’d go down a test matrix, one row at a time, with a green pen this time, so that she could tell later what she’d thought then from what she thought now.</p>
+<p><em>More responsive to interest?</em> Twenty careful cells, for the one person who had asked him how it worked, asked and meant it. A few terse sentences in room 4C, for an audience he’d expected to be hostile. One inflammatory line, for forty people he’d already decided wouldn’t read it; or for forty people who really had decided not to, and had answered his email accordingly, which came to much the same thing. Probably yes. Not definitive, but worth a tick.</p>
+<p><em>Work dismissed because of tone?</em> Nothing in the notebook could test that. She left it alone.</p>
+<p><em>Genuine interest in the math.</em> Cell 7 answered that. You don’t find <em>orthogonality only sees the rise</em> by accident at three in the morning.</p>
+<p>And then a new line, from cell 5, with nothing behind it but the shape of a missing picture: <em>someone taught him a picture doesn’t count?</em> She kept the question mark.</p>
+<p>A list of guesses is only as good as the evidence you haven’t looked at yet. So she made herself look for what was missing.</p>
+<p>Her question about Mara’s code. <em>Why does the temperature converge when the flux never does?</em> It wasn’t anywhere in the notebook. Not a cell, not a sentence.</p>
+<p>She didn’t believe for a moment that he hadn’t worked on it. In 4C he had started on it before she’d finished asking. She had watched him pull the laptop back, zoom in on the flux at the glue, zoom again, type something, frown at it, and forget for a minute that she was in the room. Some people go that deep into a question in a meeting and then leave it alone for a whole night. Not the person who had written the notebook she’d just read twice. He had worked on it. And whatever he’d found, he hadn’t sent it.</p>
+<p>So the absence was information. One more line in green, at the bottom of the column. Then she looked over the page as it stood now.</p>
+<div class="notepad">
+<div class="cols">
+<div>
+<p><strong>what he can do</strong></p>
+<p>the diagnosis (right)</p>
+<p>Tent, before anyone asked</p>
+<p>pictures, real math behind them</p>
+<p>the 2 a.m. email: most important in a decade</p>
+</div>
+<div>
+<p><strong>how he hides it</strong></p>
+<p>rebuttals in pencil</p>
+<p>answers to questions I didn’t ask</p>
+<p><em>obvious</em> (×2)</p>
+<p>closes subjects instead of explaining</p>
+<p>ready for an argument, not agreement</p>
+</div>
+<div>
+<p><strong>guesses</strong></p>
+<p>More responsive to interest? <span class="green">✓ written for the one who asked</span></p>
+<p>↳ Work dismissed because of tone? <span class="green">nothing here to test it</span></p>
+<p>&nbsp;</p>
+<p>Genuine interest in the math <span class="green">✓ cell 7</span></p>
+<p><span class="green">someone taught him a picture doesn’t count?</span></p>
+<p><span class="green"><strong>won’t show what he can’t answer</strong></span></p>
+</div>
+</div>
+</div>
+<p>Once it was on the page, the last line in the guesses column explained the rest of the morning. The 5:04. The polish. Only the things he could be certain of. If you can’t show what you can’t answer, then everything you <em>do</em> show has to be finished and beyond argument, or it doesn’t get shown at all. The polish wasn’t vanity. It was the price for showing anything at all.</p>
+<p>Mara had been afraid of the unanswered question, too. Her fear had just come out differently. Instead of one-liners that made people feel small, Mara built reports that ran five times longer than anyone needed: every eventuality foreseen and addressed, every shadow of a doubt held up to the light until it was gone. Joyce had teased her about it, gently, for years. Every question anyone could think to ask was answered before they could ask it, appendix after appendix, until the reports were less documents than fortifications. Joyce had read them as thoroughness, and praised them as thoroughness.</p>
+<p>Then came the design review Joyce had gone over so many times since that she could reconstruct it like a log file. Ron from propulsion asked about soak-back after shutdown, the heat that creeps inward once the engines stop. It was a fair question, and it wasn’t in the report. Mara went still. And Joyce answered it for her, smoothly and kindly, so that the moment passed and nobody but Mara noticed it had happened.</p>
+<p>Mara’s next report was longer. And she grew distant beyond the reports, too. Before, the reports had been hard to parse, but Joyce, at least, had always been able to get through to Mara. A warm banana-nut muffin on her desk and a quick chat. Mara had trusted Joyce to help her find the truth of what she was saying. No, not the truth; Mara always knew what was true. Mara had trusted Joyce to help her find which of the true things <em>mattered</em>. But after that review, Mara never again brought Joyce a question that Mara hadn’t already answered. As her reports got longer and her explanations of them scarcer, the analysts’ amused appreciation for the mysterious Mara turned into irritation: at what she was doing, at why they should care, at how they were supposed to use it. Joyce could feel Mara slipping away from the company, slipping through her fingers like sand. And then, before Joyce had understood how far it had gone, Mara was gone.</p>
+<p>Joyce had taken that sequence apart many times since, the way she’d take apart a code with an intermittent fault: find the step where the behavior changed. That was what made Mara, out of every pupil Joyce had failed, the one that stuck. Mara hadn’t just come unbonded from Falkenrath-Voss on her own, like a badly glued tile. Joyce had been the one who caused it. By rescuing her, Joyce had taught her that not knowing, in front of people, was something you needed to be rescued from. And after that, Joyce could see Mara slowly sabotaging the career she should have had, would have had, and couldn’t get through to her to stop it.</p>
+<p>And Luis? One upside: he had made such an impressive mess of things on his own, before Joyce had known a single thing about him, that nobody could blame her if he fizzled out of Falkenrath-Voss the way Mara had. No.&nbsp;Not the way Mara had. Luis wouldn’t fizzle. Luis would go out as a ball of fire and anger and hurt, compressed until it exploded.</p>
+<p>She looked over his notebook again. A new method that fit the new requirements of Kestrel perfectly, and fit them in a way only he had thought to look for. He had found the problem and its solution creatively, and delivered it competently and fast. And for Joyce, at least, he had delivered it with clarity and credibility.</p>
+<p>No, nobody would blame her if he failed. But could she help Brandon and the analysts see what she knew to be true: that they might never find a more valuable numericist in the rest of their careers? Could she help Luis show them that side of himself, so obviously there, so ferociously hidden behind much less likeable things?</p>
+<p>Maybe she could. She could at least see Luis in a way nobody else here had. Brandon trusted her. And the analysts trusted Brandon, when he said things in a way they understood.</p>
+<p>But the gap between Luis and the rest of the company had grown so wide. The bridge across it would have to be enormous, and architecturally perfect. One crack, one misplaced brick, and it would come down. And what if she couldn’t build it? What if she tried, and instead of seeing each other, both sides escalated, and out of hurt showed each other the worst of themselves, until there was only one way it could end?</p>
+<p><em>This is why you left</em>, she admitted to herself, in something just under a whisper.</p>
+<p>Because what mattered most in great engineering was building up the people who did it. Joyce had always known that, deeply, in a way few others did, or at least in a way few others admitted. It was basic, really. Help someone understand that they matter. Show them how to believe that other people matter too, and to look for that value instead of finding reasons it isn’t there. Help them say, to themselves and to everyone else, what they bring. Do that for a whole team. And the result filled Joyce with something like reverence. Aircraft that flew faster than people once had words for. A heat shield that came home from Mach 7 and flew again the next week. A rocket booster that came back down out of the sky and landed itself, upright, on a barge in the ocean. A probe that flew through the sun’s outer atmosphere and kept sending back data.</p>
+<p>People made those wonders creatively, as individuals, from answers that came from finding out who they were. And they made them together, by connecting ideas no one of them had alone, in ways that couldn’t be explained as the sum of what each one brought. Most of the time it didn’t come from learning anything technically new at all. That was engineering in its purest form. It was the one thing Joyce knew of that broke every conservation law she believed in. It was alchemy. And getting to see it happen (no: she was owning her accomplishments now, remember?), getting to <em>conduct</em> that alchemy, in ways that wouldn’t have happened without her, was like flying. It made her chest feel big and fizzy, proud in a way that was bigger than she was, more than anything else ever had.</p>
+<p>But if you get to feel like you can fly, you also get to feel like you can fall: from higher than you can imagine, faster than you can follow, into ground so hard it knocks the breath out of you and leaves something that never quite heals.</p>
+<p>After a while, the pain from the few people she had failed weighed more than the highs, more than the sense of mattering. And after a while, the fear that the next person would retreat, or burn out, or simply leave clung to her at every first meeting, and every meeting after. It took the joy out of it.</p>
+<p>Anyway, she had done enough by now, hadn’t she? Hadn’t enough tile stacks, on her watch, come home from reentry still bonded? Hadn’t enough vehicles gone up through the atmosphere and come back down through it in one piece? Hadn’t enough people become leaders, and genuinely good coders, and computational thinkers, and designers, and managers, who wouldn’t have without her? She hadn’t changed the world more than anyone else; she hadn’t even made the impact she’d expected of herself when she started. But surely she had done enough to rest. Surely it was all right to say <em>no, thank you</em> to something she cared about so much that if it failed, part of her wouldn’t come back.</p>
+<p><em>He’s going to get himself fired before anyone finds out.</em> Brandon’s line came back to her, long after he’d gone, exactly the way he’d known it would.</p>
+<p>Joyce looked down again at a beautifully built notebook, truly lovely to behold. And she thought about the person who’d written it, who belonged nowhere else but at Falkenrath-Voss, as its lead numericist someday.</p>
+<p>She was peeved at Brandon. She really was. It wasn’t funny, manipulating someone when it came to her life. Joyce had made plans. Boring plans, but tranquil ones. <em>It’ll be fun to build a guitar</em>, she’d thought. <em>What a simple pleasure, playing something you made with your own hands. All the better after a career of writing code.</em></p>
+<p>She let out a sigh that was half exasperation and half surrender. She wasn’t sure what yet, but Brandon owed her, big. A red velvet cupcake from TT’s, at least. No: a dozen. Well, she’d work out the details later. But it would be big.</p>
+<hr>
+<p>Joyce took a deep breath, lifted her pen, and clicked it once, precisely. She would start by standing between Luis and the analysts: be the glue that held them together until they could work it out themselves. To do that, she needed to understand all of it, deeply and for herself. She would work it in the open, on paper, and not stop until it was done.</p>
+<p>She turned to a clean page and wrote down the question she’d asked in room 4C, the one she knew Luis had worked on, too, and left out of the notebook.</p>
+<div class="notepad">
+<p><strong>Why does the temperature converge when the flux, proportional to the temperature’s slope, doesn’t?</strong></p>
+</div>
+<p>Stated that baldly, it sounded like a contradiction. It wasn’t one; the numbers said so. Mara’s flux was wrong at every interface, a spike that sat there at every polynomial degree and refused to shrink. And yet the temperature, which is nothing but that slope added up across the stack, converged at every point she’d looked at. So one of her instincts was wrong, and she meant to find out which by following the slope wherever it went.</p>
+<p>What did she actually know about Mara’s answer? Directly, almost nothing. She couldn’t look at the error; if she could, she’d know the true temperature and wouldn’t need the code. What she knew was how the answer had been chosen. Galerkin. Out of every polynomial in the subspace, the code picks the one whose residual, whatever is left over when you put it back into the heat equation, is orthogonal to every function in the subspace.</p>
+<p>And the residual had a second identity, which was the useful one. The true temperature satisfies the heat equation exactly, <span class="math inline">\(Lu = f\)</span>, where <span class="math inline">\(Lu = -(k\,u')'\)</span>. So the residual <span class="math inline">\(f - Lu_a\)</span> is the same thing as <span class="math inline">\(Lu - Lu_a\)</span>: the heat equation applied to the error.</p>
+<div class="notepad">
+<p><span class="math inline">\(e = u - u_a\)</span> &nbsp;(the error)</p>
+<p>residual: &nbsp;<span class="math inline">\(f - Lu_a \;=\; Lu - Lu_a \;=\; Le\)</span></p>
+<p>Galerkin: &nbsp;<span class="math inline">\((Le,\, v) = 0\)</span> &nbsp;for every <span class="math inline">\(v\)</span> in <span class="math inline">\(\mathcal{V}\)</span></p>
+</div>
+<p>One fact about the error, for free. Not what the error was, but something true of it against every candidate in the subspace.</p>
+<p>It was a fact about <span class="math inline">\(Le\)</span>, though, and <span class="math inline">\(Le\)</span> carried two derivatives of the error. What was misbehaving was the slope: one derivative. She wanted a statement about <span class="math inline">\(e'\)</span>. So she did what anyone does with one derivative too many, and integrated by parts to move it onto <span class="math inline">\(v\)</span>. It was also, she knew, the only form Mara’s code ever used: a polynomial’s flux jumps wherever <span class="math inline">\(k\)</span> does, so the code never formed <span class="math inline">\(Lu_a\)</span> at all, only this integrated version, which doesn’t mind the jumps. The boundary terms dropped out, because the face temperatures are fixed, so every function in the subspace is zero at both faces.</p>
+<div class="notepad">
+<p><span class="math inline">\((Le,\, v) = \displaystyle\int -(k\,e')'\,v\;dx \;=\; \int k\,e'\,v'\;dx\)</span></p>
+<p>(<span class="math inline">\(v = 0\)</span> at both faces, so no boundary terms)</p>
+<p><u>so &nbsp;<span class="math inline">\(\displaystyle\int k\,e'\,v'\,dx = 0\)</span> &nbsp;for every <span class="math inline">\(v\)</span> in <span class="math inline">\(\mathcal{V}\)</span></u></p>
+</div>
+<p>She underlined it. Whatever came next would hang from that line.</p>
+<p>She read it back in words. Weighted by <span class="math inline">\(k\)</span>, the slope error cancels against the slope of every function in the subspace. Whatever the slope error was doing at the interface, it was doing it in a way that came out even against every slope Mara’s polynomials could make.</p>
+<p>That put her in mind of something people say about Galerkin: that it gives you the <em>best</em> answer in the subspace. She had said it herself, to rooms that nodded. Best in what sense, though? Not best at every point; Mara’s spike settled that. And not the least-squares fit of the temperature, either: Luis’s Tent landed exactly on the true temperature at every node, and a least-squares fit of a curve doesn’t do that. If Mara’s answer was the best at something, it was best in some measure Joyce hadn’t named. And if she could name it, and it turned out to be about slopes, she would know exactly what the spike was and wasn’t allowed to do.</p>
+<p>The way to find out was to hold Mara’s answer up against the competition. Take any other candidate <span class="math inline">\(v\)</span> from the subspace and compare its error with Mara’s. If Mara’s always came out smaller, she’d have her measure. Better still, she’d have a bound: anything she could prove about some candidate’s error, she’d get to say about Mara’s for free.</p>
+<p>A candidate’s error was <span class="math inline">\(u - v\)</span>. She split it so that Mara’s error showed up inside it:</p>
+<div class="notepad">
+<p>any candidate <span class="math inline">\(v\)</span> in <span class="math inline">\(\mathcal{V}\)</span>:</p>
+<p><span class="math inline">\(u - v \;=\; (u - u_a) + (u_a - v) \;=\; e + w\)</span></p>
+<p><span class="math inline">\(w = u_a - v\)</span> is in <span class="math inline">\(\mathcal{V}\)</span> too &nbsp;(both of them are)</p>
+</div>
+<p>That second piece was the point of splitting it this way. <span class="math inline">\(w\)</span> lived in the subspace, so the underlined line applied to it, with <span class="math inline">\(w\)</span> playing <span class="math inline">\(v\)</span>.</p>
+<p>Now, which measure? The underlined line was about slopes, weighted by <span class="math inline">\(k\)</span>. So she tried exactly that: the candidate’s slope error, squared so the spike couldn’t hide behind its sign, weighted by <span class="math inline">\(k\)</span>, and added up across the whole stack.</p>
+<div class="notepad">
+<p><span class="math inline">\(\displaystyle\int k\,(u - v)'^2\,dx \;=\; \int k\,(e' + w')^2\,dx\)</span></p>
+<p><span class="math inline">\(= \displaystyle\int k\,e'^2\,dx \;+\; 2\!\int k\,e'\,w'\,dx \;+\; \int k\,w'^2\,dx\)</span></p>
+</div>
+<p>Three terms. She took them one at a time. The first was Mara’s error, in the measure she was testing. The middle one was the underlined line, with <span class="math inline">\(w\)</span> in place of <span class="math inline">\(v\)</span>: zero. The last was a square times a conductivity, and conductivities are positive: it could never be negative.</p>
+<div class="notepad">
+<p>middle term <span class="math inline">\(= 0\)</span> &nbsp;(the underlined line, with <span class="math inline">\(v = w\)</span>)</p>
+<p>last term <span class="math inline">\(\ge 0\)</span> &nbsp;(<span class="math inline">\(k &gt; 0\)</span>, times a square)</p>
+<p><span class="math inline">\(\Rightarrow\;\; \displaystyle\int k\,e'^2\,dx \;\le\; \int k\,(u - v)'^2\,dx\)</span> &nbsp;for every <span class="math inline">\(v\)</span> in <span class="math inline">\(\mathcal{V}\)</span></p>
+</div>
+<p>So that was the sense. Of every polynomial in the subspace, Mara’s answer had the smallest slope error, measured as the slope error squared, weighted by <span class="math inline">\(k\)</span>, and added up across the whole stack. No candidate beat it. And <em>added up</em> was the whole story. Galerkin had never promised that the slope would be right at any particular point. It had promised only that this one integral would be as small as polynomials could make it.</p>
+<p>Which turned her puzzle into a question she could actually answer: how small <em>can</em> polynomials make that integral, when the true slope jumps?</p>
+<p>And it does jump. The heat crossing an interface is the same on both sides, so where <span class="math inline">\(k\)</span> jumps, the slope has to jump the other way. From glue to structure the conductivity rises about seventeenfold, and the slope drops by the same factor, all at once.</p>
+<p>She didn’t need the best candidate; any reasonable one would do, since Mara’s was at least as good. So she took the obvious one: the polynomial whose slope was the least-squares fit to the true slope. (That fit gets the average slope right, so the candidate still runs from the hot-face temperature to the cold one. It was a fair entrant.) And how well a polynomial fits a jump, she knew.</p>
+<p>Gibbs. Most people meet it with Fourier series, a square wave ringing at its corners. Fewer people know that polynomials ring at a jump too, and for the same reason: one smooth function stretched across the whole stack can’t turn a sharp corner, so it does the best it can on average and overshoots on either side.</p>
+<div class="notepad">
+<p>Best polynomial fit of a jump of size <span class="math inline">\(J\)</span>: &nbsp;<strong>Gibbs.</strong></p>
+<p>spike height: about <span class="math inline">\(J/2\)</span> at the jump (the fit splits the difference), and it overshoots by another <span class="math inline">\(\approx 9\%\)</span> of <span class="math inline">\(J\)</span> just beside it. Fixed, at every <span class="math inline">\(n\)</span>.</p>
+<p>spike width: <span class="math inline">\(\sim 1/n\)</span></p>
+<p>so &nbsp;<span class="math inline">\(\displaystyle\int (\text{spike})^2 \;\sim\; \text{height}^2 \times \text{width} \;\to\; 0\)</span></p>
+</div>
+<p>The spike never shrinks. It just gets thinner, and a spike that keeps getting thinner contributes less and less to an integral of its square. The weight <span class="math inline">\(k\)</span> changed nothing important; it was never bigger than the structure’s <span class="math inline">\(k_{\max}\)</span>.</p>
+<div class="notepad">
+<p><span class="math inline">\(\displaystyle\int k\,e'^2\,dx \;\le\; \int k\,(u - v_{\text{fit}})'^2\,dx\)</span></p>
+<p><span class="math inline">\(\le\; k_{\max}\!\displaystyle\int (\text{spike})^2\,dx \;\to\; 0\)</span></p>
+</div>
+<p>That settled the slope. Mara’s flux, <span class="math inline">\(-k\)</span> times the slope, would be wrong at the interface forever, by a fixed amount, in an ever-thinner sliver. And the slope error, measured as an integral, went to zero anyway. Both of the facts she’d thought were incompatible were true of the slope at the same time.</p>
+<p>But the question at the top of the page was about the temperature. And what the data showed wasn’t convergence in some integral sense; it was convergence at every point, including the one number certification cares about, the temperature at the glue. An integral going to zero doesn’t promise that on its own. A function can have a tiny integral and still be large somewhere; the spike had just demonstrated it. So she needed a way from what she now knew, an integral of the slope error, to the temperature error at one point <span class="math inline">\(x\)</span>.</p>
+<p>The way was the simplest thing in calculus. The temperature error is the slope error, added up from the hot face. And at the hot face there’s no error at all: Mara’s code and the truth are both pinned to 1100 K there.</p>
+<div class="notepad">
+<p><span class="math inline">\(e(x) \;=\; e(0) + \displaystyle\int_0^x e'(s)\,ds \;=\; \int_0^x e'(s)\,ds\)</span></p>
+<p>(<span class="math inline">\(e(0) = 0\)</span>: both are 1100 K at the hot face)</p>
+</div>
+<p>So how big could <span class="math inline">\(\int_0^x e'\)</span> be, if all she knew was that <span class="math inline">\(\int k\,e'^2\)</span> was small? She knew the size of the square, and she wanted the size of the plain integral. The standard way across was Cauchy–Schwarz: the integral of a product of two functions is never bigger than the product of their sizes, each size measured as the square root of the integral of its square. She needed a product. Writing <span class="math inline">\(e'\)</span> as <span class="math inline">\(1 \cdot e'\)</span> gave her one.</p>
+<div class="notepad">
+<p><span class="math inline">\(|e(x)| \;=\; \Big|\displaystyle\int_0^x 1\cdot e'\,ds\Big|\)</span></p>
+<p><span class="math inline">\(\le\; \Big(\displaystyle\int_0^x 1^2\,ds\Big)^{1/2}\Big(\int_0^x e'^2\,ds\Big)^{1/2}\)</span></p>
+<p><span class="math inline">\(= \sqrt{x}\,\Big(\displaystyle\int_0^x e'^2\,ds\Big)^{1/2}\)</span></p>
+</div>
+<p>Close. But what she knew was small was <span class="math inline">\(\int k\,e'^2\)</span> over the <em>whole</em> stack, not <span class="math inline">\(\int e'^2\)</span> up to <span class="math inline">\(x\)</span>. Two small gaps. The first was easy: adding up more of something that’s never negative can only make it bigger, so stretch the integral out to the cold face, at <span class="math inline">\(L\)</span>. The second needed <span class="math inline">\(k\)</span>. Every layer had a conductivity at least the glue’s, <span class="math inline">\(k_{\min}\)</span>, so <span class="math inline">\(k\,e'^2\)</span> was never less than <span class="math inline">\(k_{\min}\,e'^2\)</span>, anywhere.</p>
+<div class="notepad">
+<p><span class="math inline">\(\displaystyle\int_0^x e'^2\,ds \;\le\; \int_0^L e'^2\,ds \;\le\; \frac{1}{k_{\min}}\int_0^L k\,e'^2\,ds\)</span></p>
+</div>
+<p>She put the two lines together.</p>
+<div class="notepad">
+<p><span class="math inline">\(|e(x)| \;\le\; \sqrt{x/k_{\min}}\;\Big(\displaystyle\int_0^L k\,e'^2\,ds\Big)^{1/2}\)</span></p>
+<p><span class="math inline">\(\to\; 0\)</span>, &nbsp;at every <span class="math inline">\(x\)</span></p>
+</div>
+<p>However tall the spike, if it’s thin enough, it barely moves the sum. So the temperature converges at every single point, while the slope at the interface never does. Two instincts, and the wrong one had been that a converging temperature needed the slope to converge at every point. It only needed the slope to converge on average. Adding up did the rest.</p>
+<p>She sat back. It was the particular pleasure of a column of numbers that finally adds up, and she let herself have all of it.</p>
+<p>Then she checked it, because to Joyce a proof wasn’t finished until a computation agreed with it. Brandon’s consulting paperwork had come with a login. She ran Mara’s code on the old thick stack, where the polynomial can see the glue from the start, so that nothing but the ringing would be in the way.</p>
+<div class="notebook">
+<div id="0d53e98a" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> falkenrath <span class="im">import</span> mara, exact, KESTREL_A <span class="im">as</span> thick</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, thick.thickness, <span class="dv">40001</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Te <span class="op">=</span> exact(thick)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>dT, L <span class="op">=</span> thick.T_hot <span class="op">-</span> thick.T_cold, thick.thickness</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> (<span class="dv">64</span>, <span class="dv">128</span>, <span class="dv">256</span>, <span class="dv">512</span>):</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> mara.solve(thick, degree<span class="op">=</span>n)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    slope_err <span class="op">=</span> (dT <span class="op">/</span> L <span class="op">*</span> (m.flux(x) <span class="op">-</span> Te.flux(x))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                 <span class="op">/</span> thick.k(x))                  <span class="co"># K/mm</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    spike <span class="op">=</span> <span class="bu">abs</span>(slope_err).<span class="bu">max</span>()</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    l2 <span class="op">=</span> np.sqrt(trapezoid(slope_err<span class="op">**</span><span class="dv">2</span>, x))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    T_err <span class="op">=</span> np.<span class="bu">abs</span>(Te.temperature(x) <span class="op">-</span> m.temperature(x))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    bound <span class="op">=</span> (np.sqrt(x) <span class="op">*</span> l2).<span class="bu">max</span>()</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"n=</span><span class="sc">{</span>n<span class="sc">:3d}</span><span class="ss">  spike </span><span class="sc">{</span>spike<span class="sc">:3.0f}</span><span class="ss"> K/mm"</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f"  int </span><span class="sc">{</span>l2<span class="sc">:4.1f}</span><span class="ss">  T err </span><span class="sc">{</span>T_err<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:4.1f}</span><span class="ss"> K"</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f"  bound </span><span class="sc">{</span>bound<span class="sc">:3.0f}</span><span class="ss"> K"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>n= 64  spike  59 K/mm  int 36.3  T err 19.7 K  bound 230 K
+n=128  spike  59 K/mm  int 26.6  T err 10.3 K  bound 168 K
+n=256  spike  59 K/mm  int 19.2  T err  5.3 K  bound 122 K
+n=512  spike  59 K/mm  int 13.2  T err  2.6 K  bound  84 K</code></pre>
+</div>
+</div>
+</div>
+<p>Every line of it behaved. The worst slope error sat at about 59 kelvin per millimeter and refused to move. The true slope jumped by 74 there, so the spike was more than half the jump, which made her frown until she saw why: Galerkin weighs the slope error by <span class="math inline">\(k\)</span>, and the glue, where <span class="math inline">\(k\)</span> was smallest, was where errors came cheapest. That was where it had put them. The integral fell by a factor of about 1.4 every time the polynomial degree doubled. And the temperature error fell, from 20 kelvin to 2.6, and at every polynomial degree it sat under her bound.</p>
+<p>So that was that riddle. And with it, Joyce had all the pieces behind Mara’s code. She could explain why it had been perfectly suitable before Kestrel, and why the thin stacks hadn’t made it wrong, exactly: its temperatures still converged, if you pushed the polynomial degree high enough. She could now show that with a proof, and back it with a computation. And she could say precisely what was wrong with keeping it for Kestrel. Its convergence was unreliable, and its keep-doubling-the-degree check could certify a temperature twenty-nine kelvin low. You could tighten the tolerance on how closely two runs had to agree, but the right tolerance would depend on the thickness of each stack: a mess to keep track of, and one bookkeeping error away from a Falkenrath-Voss vehicle making the news in the worst way.</p>
+<p>Good. She could say what was wrong. Before you fix anything, you say what’s broken. But how to position Tent as the fix?</p>
+<p>She closed her eyes to organize it. Not as a list she could see behind her eyelids; she had never been able to see much of anything in her mind’s eye. She organized it as words instead, a sequence of steps that made sense, lined up like little students taking their places for a talent show. She had found, over the years, that if she could put them in an order that made sense to her, they usually made sense to whoever she presented them to.</p>
+<p>Eyes closed, she let the order arrive. And the sequence that arrived was one she hadn’t had to make up herself. <em>Cell 1.</em> Then, <em>cell 2.</em> She opened her eyes. She knew what came next, too. Luis had already worked it out. Not just worked it out: worked out how to say it, how to roll it out, one cell at a time.</p>
+<p>There was only one thing that still itched. Nothing large or structural; as far as she was concerned, the story for rolling out Tent was set, thanks to Luis. It was a detail inside it, one that hadn’t sat well with her the first time she read it and hadn’t since. <em>Tent is exact at interfaces.</em> She turned the printout back to cell 7, his visual proof. Surely that wasn’t the full story. Nothing in numerics was exact. And there, in the margin at the top of the cell, was her note: <em>a constant: which constants?</em></p>
+<p>His argument was a picture: clear, and pretty convincing. But there had to be something hidden inside it, and she wanted to take the integral apart one line at a time. She didn’t have to look far for the integral. Cell 7 stood on the same condition she’d started from that morning, the line she’d underlined: the error, weighted by <span class="math inline">\(k\)</span>, cancelling against the slope of every function in the subspace. For Tent, those functions were tents.</p>
+<p>If his picture was right, then the answer Galerkin picks for Tent is the set of straight lines through the true temperature at every node. That has a name: the interpolant. Write it <span class="math inline">\(\mathcal{I}u\)</span>. So if the nodes are exact, Galerkin’s answer and the interpolant are the same function. That was a strong claim. Strong claims are easy to test, because you only have to check them once.</p>
+<div class="notepad">
+<p><strong>Guess:</strong> &nbsp;<span class="math inline">\(u_a = \mathcal{I}u\)</span> &nbsp;(straight lines through the true temperatures at the nodes)</p>
+</div>
+<p>How do you check a guess for a Galerkin solution? The same way the method chooses one: put the guess’s error into the underlined line, and see whether it cancels against every tent. If <span class="math inline">\(u - \mathcal{I}u\)</span> passes that test, then <span class="math inline">\(\mathcal{I}u\)</span> satisfies the very equations Galerkin solves, and Galerkin’s equations have exactly one answer.</p>
+<div class="notepad">
+<p><strong>Check:</strong> &nbsp;is <span class="math inline">\(\displaystyle\int k\,(u - \mathcal{I}u)'\,b_j'\,dx = 0\)</span> for every tent <span class="math inline">\(b_j\)</span>?</p>
+<p><span class="math inline">\(\displaystyle\int k\,(u - \mathcal{I}u)'\,b_j'\,dx \;=\; \sum_e \int_e k\,(u - \mathcal{I}u)'\,b_j'\,dx\)</span></p>
+</div>
+<p>The integral splits into one piece per element, because a tent is a straight line on each element and nothing more. And on each element, the tent’s slope <span class="math inline">\(b_j'\)</span> is a constant: plus or minus one over the width. That was Luis’s whole point. It could come out of the integral.</p>
+<p>She wrote that much, and then her pen stopped. Because <span class="math inline">\(k\)</span> was sitting in that integral, too. For it to come out along with the slope, it had to be a constant on the element as well.</p>
+<p>On this stack it was. Every element was one material: tile, glue, structure. So both constants could come out.</p>
+<div class="notepad">
+<p><span class="math inline">\(= \displaystyle\sum_e \, k_e\, b_j'\big|_e \int_e (u - \mathcal{I}u)'\,dx\)</span></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;<span class="math inline">\(\uparrow\)</span> <span class="green"><span class="math inline">\(k\)</span> <strong>constant on each element!</strong></span></p>
+</div>
+<p>What was left in each integral was the slope of the error added up across one element, which is just the error at one end minus the error at the other. Luis’s <em>rise</em>.</p>
+<div class="notepad">
+<p><span class="math inline">\(= \displaystyle\sum_e \, k_e\, b_j'\big|_e\, \Big[\, u - \mathcal{I}u \,\Big]_{\text{ends of } e}\)</span></p>
+<p><span class="math inline">\(= 0\)</span>, &nbsp; because <span class="math inline">\(\mathcal{I}u = u\)</span> at every node. &nbsp; ✓</p>
+<p>So <span class="math inline">\(u_a = \mathcal{I}u\)</span>: &nbsp; <strong>exact at every node.</strong></p>
+</div>
+<p>It worked, of course. It was his argument, with the integral open, and the last line was his <em>rise across each element</em>. It was zero because the guess passed through every node.</p>
+<p>But she kept coming back to the line with the arrow. <span class="math inline">\(k\)</span> had come out of the integral for one reason only: it was constant on every element. In his picture, that assumption had been hiding inside a phrase, <em>a constant times the slope of the error</em>. Two constants, and only one of them was guaranteed.</p>
+<p>What if <span class="math inline">\(k\)</span> <em>wasn’t</em> constant? Every real tile she’d ever worked with was graded somewhere: densified near the surface, coated, its conductivity climbing as it heated up. Once Tent moved past these test stacks to real hardware, <span class="math inline">\(k\)</span> would change inside an element. Then that line would fail, the rises would no longer be the whole story, and the nodes…</p>
+<p>She had a strong guess. She didn’t write it down. She wrote <em><span class="math inline">\(k\)</span> varies inside an element: ?</em> and underlined the question mark.</p>
+<hr>
+<p>By eight she had all of it in hand: the diagnosis, the convergence argument, the proof, and the caveat. She opened her laptop and wrote it up for Brandon, the way she’d done it for twenty-two years. <em>Mara’s code and Luis’s Tent: where things stand.</em> Three paragraphs and two scanned pages. Brandon would forward it to the analysts, and the argument would be over by lunch.</p>
+<p>She read it back. It was clear, readable, complete. It was also a solved problem, and one more reason to think the engineer behind it hadn’t needed to be there. She had written this email before, in a way: out loud, across a table from Mara, smoothly and kindly.</p>
+<p>She took her hands off the keyboard and laid them flat on the bench. Translating for Mara had started her down a slow, quiet, unflinching road to an early resignation, and to a life of who knew what. Joyce had never once let herself search for her name, or ask after her. Hopefully Mara was happy, somewhere that let her use what she had. Somewhere that <em>saw</em> what she had. But if she wasn’t, Joyce didn’t want to know it.</p>
+<p>What if Luis didn’t need a translator either? What, then: let Luis speak for himself? Let Luis talk to the analysts? She swatted the idea away like a bug. If she controlled the story, it would be clean. It would be true to Luis and what he could do. It would be <em>hers</em>. If she didn’t have that, then…</p>
+<p>The feeling came rushing up at her: falling, from a great height. Of course. Now that she’d committed, now that she cared, <em>now</em> was when she could see how doomed this was.</p>
+<p>She closed her eyes. She let her hands go still on the bench, and paid attention to the grain of the wood under her palms. She noticed her breath as it slowed, and steadied.</p>
+<p>She thought back to why she’d retired, and then, because she was trying to be fair, to why she’d stayed so long before that. Tom would never have run the structures group if she hadn’t talked him into presenting the review nobody else wanted. Joyce had been the first to show Vanessa that her side project on mesh adaptivity was the real project, and then Vanessa surprised everyone but Joyce by cutting the program’s analysis turnaround in half. Those were just two. It really was a long list, Joyce admitted to herself, and part of her didn’t want to admit it. There was a certain relief in feeling sorry for herself about how hard this would be, how fated it was. But that just came with caring. If you want something that matters, you might not get it. That’s what makes it worth wanting.</p>
+<p>She looked back at the email, the cursor still hovering near <em>Send</em>. But Luis <em>could</em> communicate. She’d just seen it, in one of the clearest and most compelling notebooks she’d read in years. This wasn’t over.</p>
+<p>She moved the cursor away from <em>Send</em>, up to the corner of the window, and clicked. <em>Discard draft?</em> Yes.</p>
+<p>Then she picked up her phone and wrote two texts. The first was to Brandon: <em>Put Luis on next week’s thermal review. Twenty minutes. Don’t ask yet.</em> The second was to Luis: <em>Coffee? 10:00, the place across from the east lot. My treat.</em></p>
+<p>Brandon replied with a single question mark. Luis replied three minutes later: <em>ok</em>.</p>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/02-better-than-good.html" class="pagination-link" aria-label="Better than good">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Better than good</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/04-show-them.html" class="pagination-link" aria-label="Show them">
+        <span class="nav-page-text"><span class="chapter-title">Show them</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
